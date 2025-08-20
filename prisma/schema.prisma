@@ -1,0 +1,452 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+//output   = "../../node_modules/.prisma/client"
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Dev_project {
+  id        Int       @id @default(autoincrement())
+  name      String    @db.VarChar(100)
+  desc      String    @db.VarChar(100)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("dev_projects")
+}
+
+//email      String?   @db.VarChar(100)//? boleh ada null //perbaiki ya***********
+model Tablecoba {
+  id         Int     @id @default(autoincrement())
+  first_name String  @db.VarChar(100)
+  last_name  String? @db.VarChar(100)
+  email      String  @db.VarChar(100)
+  phone      String? @db.VarChar(20)
+  address    String? @db.VarChar(20)
+  username   String  @db.VarChar(20)
+
+  @@map("tablecobas")
+}
+
+// model DevTable {
+//   id         Int       @id @default(autoincrement())
+//   project_id Int
+//   name       String    @db.VarChar(100)
+//   desc       String    @db.VarChar(255)
+//   create_by  String    @default("admin") @db.VarChar(20)
+//   update_by  String?   @db.VarChar(20)
+//   create_at  DateTime?
+//   update_at  DateTime?
+
+//   @@map("dev_tables")
+// }
+
+model DevTableColumn {
+  id         Int    @id @default(autoincrement())
+  table_id   Int
+  table_name String @db.VarChar(100)
+  name       String @db.VarChar(100)
+  desc       String @db.VarChar(255)
+  type       String @db.VarChar(20) //varchar,numeric,date,time dll
+  length     Int    @default(1)
+  is_id      String @db.VarChar(2) //Yes,No
+  is_null    String @db.VarChar(2) //Yes,NO
+  is_uniq    String @db.VarChar(2) //Yesy, NO
+  default    String @db.VarChar(20)
+
+  @@map("dev_tables_column")
+}
+
+model User {
+  username  String    @id @db.VarChar(100)
+  password  String    @db.VarChar(100)
+  name      String    @db.VarChar(100)
+  token     String?   @db.VarChar(100)
+  create_by String    @default("admin") @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+  contacts  Contact[]
+  status    String?   @db.VarChar(20)
+  email     String?   @db.VarChar(250)
+  group     String?   @db.VarChar(100)
+  expired   DateTime?
+
+  @@map("users")
+}
+
+model Contact {
+  id         Int       @id @default(autoincrement())
+  first_name String    @db.VarChar(100)
+  last_name  String    @db.VarChar(100)
+  email      String?   @db.VarChar(100) //? boleh ada null
+  phone      String?   @db.VarChar(20)
+  username   String    @db.VarChar(100)
+  user       User      @relation(fields: [username], references: [username])
+  addresses  Address[]
+
+  @@map("contacts")
+}
+
+model Address {
+  id          Int     @id @default(autoincrement())
+  street      String? @db.VarChar(255)
+  city        String? @db.VarChar(100)
+  province    String? @db.VarChar(100)
+  country     String  @db.VarChar(100)
+  postal_code String? @db.VarChar(20)
+  contact_id  Int
+  contact     Contact @relation(fields: [contact_id], references: [id])
+
+  @@map("addresses")
+}
+
+model Project {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  desc       String    @db.VarChar(100)
+  project_id Int
+  create_by  String    @db.VarChar(20)
+  update_by  String?   @db.VarChar(20)
+  create_at  DateTime?
+  update_at  DateTime?
+
+  @@map("projects")
+}
+
+model Dev_tablex {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100) ///tolong di cek dulu pada kolom is_nulll yaa..... perbaiki
+  desc       String    @db.VarChar(100)
+  create_by  String    @db.VarChar(20)
+  update_by  String?   @db.VarChar(20)
+  create_at  DateTime?
+  update_at  DateTime?
+  project_id Int
+
+  @@map("dev_tablexs")
+}
+
+//Create Schema
+//schema.prisma
+
+model DevTableKolom {
+  id         Int       @id @default(autoincrement())
+  name       String    @db.VarChar(100)
+  table_id   Int
+  table_name String    @db.VarChar(100)
+  desc       String    @db.VarChar(100)
+  length     Int
+  is_id      String    @db.VarChar(100)
+  is_null    String    @db.VarChar(100)
+  is_uniq    String    @db.VarChar(100)
+  default    String    @db.VarChar(100)
+  type       String    @db.VarChar(100)
+  create_by  String    @db.VarChar(20)
+  update_by  String?   @db.VarChar(20)
+  create_at  DateTime?
+  update_at  DateTime?
+
+  @@map("dev_table_koloms")
+}
+
+//Create Schema DevDirektori
+
+model DevDirektori {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique @db.VarChar(100)
+  frontend  String?   @db.VarChar(250)
+  backend   String?   @db.VarChar(250)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("dev_direktoris")
+}
+
+//Create Schema Group
+model Group {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique @db.VarChar(100)
+  desc      String?   @db.VarChar(250)
+  pic       String?   @db.VarChar(250)
+  status    String    @db.VarChar(3)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("groups")
+}
+
+//Create Schema TestAja
+model TestAja {
+  id        Int       @id @default(autoincrement())
+  textaja   String?   @db.VarChar(30)
+  numberaja Int
+  tglaja    DateTime?
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("test_ajas")
+}
+
+//Create Schema Pmakai
+model Pmakai {
+  id        Int       @id @default(autoincrement())
+  username  String    @unique @db.VarChar(100)
+  password  String    @db.VarChar(100)
+  name      String    @db.VarChar(100)
+  token     String?   @db.VarChar(100)
+  status    String?   @db.VarChar(20)
+  email     String?   @db.VarChar(250)
+  group     String?   @db.VarChar(100)
+  expired   DateTime?
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("pmakais")
+}
+
+//Create Schema JobFamily
+model JobFamily {
+  id        Int       @id @default(autoincrement())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  desc      String?   @db.VarChar(250)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("job_familys")
+}
+
+//Create Schema SubJobFamily
+model SubJobFamily {
+  id              Int       @id @default(autoincrement())
+  kode            String    @unique @db.VarChar(30)
+  kode_job_family String    @db.VarChar(30)
+  nama            String    @db.VarChar(30)
+  desc            String?   @db.VarChar(250)
+  create_by       String    @db.VarChar(20)
+  update_by       String?   @db.VarChar(20)
+  create_at       DateTime?
+  update_at       DateTime?
+
+  @@map("sub_job_familys")
+}
+
+//Create Schema Kompetensi
+model Kompetensi {
+  id                  Int       @id @default(autoincrement())
+  kode                String    @unique @db.VarChar(30)
+  kode_job_family     String    @db.VarChar(30)
+  kode_sub_job_family String    @db.VarChar(30)
+  nama                String    @db.VarChar(100)
+  desc                String?   @db.VarChar(250)
+  status              String    @db.VarChar(20)
+  create_by           String    @db.VarChar(20)
+  update_by           String?   @db.VarChar(20)
+  create_at           DateTime?
+  update_at           DateTime?
+
+  @@map("kompetensis")
+}
+
+//Create Schema Akademi
+model Akademi {
+  id        Int       @id @default(autoincrement())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  status    String    @db.VarChar(30)
+  nama_pic  String?   @db.VarChar(100)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("akademis")
+}
+
+//Create Schema UserAkademi
+model UserAkademi {
+  id           Int       @id @default(autoincrement())
+  username     String    @db.VarChar(30)
+  kode_akademi String    @db.VarChar(30)
+  create_by    String    @db.VarChar(20)
+  update_by    String?   @db.VarChar(20)
+  create_at    DateTime?
+  update_at    DateTime?
+
+  @@map("user_akademis")
+}
+
+//Create Schema StatusTraining
+model StatusTraining {
+  id        Int       @id @default(autoincrement())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(30)
+  aktive    String    @db.VarChar(30)
+  desc      String?   @db.VarChar(100)
+  urutan    Int       @default(0)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("status_trainings")
+}
+
+//Create Schema Seq
+model Seq {
+  id           Int       @id @default(autoincrement())
+  kode         String    @db.VarChar(30)
+  tahun        Int
+  last_squence Int       @default(0)
+  desc         String?   @db.VarChar(30)
+  create_by    String    @db.VarChar(20)
+  update_by    String?   @db.VarChar(20)
+  create_at    DateTime?
+  update_at    DateTime?
+
+  @@map("seqs")
+}
+
+//Create Schema Training
+model Training {
+  id                  Int       @id @default(autoincrement())
+  kode                String    @unique @db.VarChar(30)
+  nama                String?   @db.VarChar(250)
+  akademi             String?   @db.VarChar(100)
+  tipe                String?   @db.VarChar(100)
+  pic                 String?   @db.VarChar(30)
+  desc                String?   @db.VarChar(250)
+  kompetensi          String?   @db.VarChar(250)
+  tgl_mulai           DateTime?
+  tgl_akhir           DateTime?
+  sub_kompetensi      String?   @db.VarChar(100)
+  status_training     String?   @db.VarChar(30)
+  kode_job_family     String    @db.VarChar(30)
+  kode_sub_job_family String    @db.VarChar(30)
+  create_by           String    @db.VarChar(20)
+  update_by           String?   @db.VarChar(20)
+  create_at           DateTime?
+  update_at           DateTime?
+
+  @@map("trainings")
+}
+
+//Create Schema TipeTraining
+model TipeTraining {
+  id        Int       @id @default(autoincrement())
+  kode      String    @db.VarChar(30)
+  nama      String    @db.VarChar(30)
+  desc      String?   @db.VarChar(100)
+  status    String    @db.VarChar(20)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("tipe_trainings")
+}
+
+//Create Schema SubKompetensi
+model SubKompetensi {
+  id                  Int       @id @default(autoincrement())
+  kode                String    @unique @db.VarChar(30)
+  kode_job_family     String    @db.VarChar(30)
+  kode_sub_job_family String    @db.VarChar(30)
+  nama                String    @db.VarChar(100)
+  desc                String?   @db.VarChar(250)
+  status              String    @db.VarChar(20)
+  kode_kompetensi     String    @db.VarChar(30)
+  create_by           String    @db.VarChar(20)
+  update_by           String?   @db.VarChar(20)
+  create_at           DateTime?
+  update_at           DateTime?
+
+  @@map("sub_kompetensis")
+}
+
+//Create Schema KompetensiLevel
+model KompetensiLevel {
+  id        Int       @id @default(autoincrement())
+  kode      String    @db.VarChar(30)
+  nama      String    @db.VarChar(30)
+  status    String    @db.VarChar(30)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("kompetensi_levels")
+}
+
+//Create Schema Checklist
+model Checklist {
+  id        Int       @id @default(autoincrement())
+  nama      String    @db.VarChar(30)
+  urut      Int
+  desc      String    @db.VarChar(100)
+  kode      String    @unique @db.VarChar(30)
+  group     String    @db.VarChar(30)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("checklists")
+}
+
+//Create Schema TrainingChecklist
+model TrainingChecklist {
+  id             Int       @id @default(autoincrement())
+  training_kode  String    @db.VarChar(100)
+  checklist_kode String    @db.VarChar(100)
+  file_1         String?   @db.VarChar(100)
+  file_2         String?   @db.VarChar(100)
+  file_3         String?   @db.VarChar(100)
+  file_4         String?   @db.VarChar(100)
+  status         String?   @db.VarChar(30)
+  checklist_name String?   @db.VarChar(100)
+  create_by      String    @db.VarChar(20)
+  update_by      String?   @db.VarChar(20)
+  create_at      DateTime?
+  update_at      DateTime?
+
+  @@map("training_checklists")
+}
+
+
+                                 
+//Create Schema Brand
+model Brand {
+id         Int    @id @default(autoincrement())
+kode String @unique @db.VarChar(100)
+nama String @unique @db.VarChar(100)
+create_by   String  @db.VarChar(20)
+update_by   String?  @db.VarChar(20)
+create_at   DateTime? 
+update_at   DateTime? 
+@@map("brands")
+}
