@@ -96,6 +96,14 @@ export class Dev_tablexService {
             })
         }
 
+        if (searchRequest.create_by) {
+            filters.push({
+                create_by: {
+                    contains: searchRequest.create_by
+                }
+            })
+        }
+
         const dev_tablexs = await prismaClient.dev_tablex.findMany({
             where: {
                 project_id: request.project_id,

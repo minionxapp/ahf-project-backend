@@ -37,7 +37,7 @@ export class DevCreateValidation {
 
         //Update validation
         validatex = validatex + "//UPDATE validation\n"
-        validatex = validatex + 'static readonly UPDATE: ZodType = z.object({\nid: z.number().positive(),\n'
+        validatex = validatex + 'static readonly UPDATE: ZodType = z.object({\nid: z.string(),\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.type === 'Varchar') {

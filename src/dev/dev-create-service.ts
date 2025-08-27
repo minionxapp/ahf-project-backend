@@ -14,9 +14,12 @@ export class DevCreateService {
         servicex = servicex + 'import { prismaClient } from "../application/database";\n' +
             'import { ResponseError } from "../error/response-error";\n' +
             'import { ' + tableName + 'Response, Create' + tableName + 'Request, Search' + tableName + 'Request, to' + tableName + 'Response, Update' + tableName + 'Request } from "../model/' +
-            tableName + '-model";\n' +
+            // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
+            tableName+'-model";\n' +
             'import { Pageable } from "../model/page";\n' +
-            'import { ' + tableName + 'Validation } from "../validation/' + tableName + '-validation";\n' +
+            'import { ' + tableName + 'Validation } from "../validation/' +
+            //  (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  +
+             tableName+ '-validation";\n' +
             'import { Validation } from "../validation/validation";\n' +
             'import { User, ' + tableName + ' } from "@prisma/client";\n' +
             'export class ' + tableName + 'Service {\n' +
@@ -54,7 +57,7 @@ export class DevCreateService {
 
         servicex = servicex + 'const record = {\n' +
             '...createRequest,//dari object yang ada\n' +
-            '...{ create_by: user.name }, //tambahkan username, dengan value dari object user\n' +
+            '...{ create_by: user.username }, //tambahkan username, dengan value dari object user\n' +
             ' ...{ create_at: new Date()}}  //tambahkan username, dengan value dari object user' +
             '}\n' +
             'const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.create({\n' +
@@ -64,7 +67,7 @@ export class DevCreateService {
             '}\n\n'
         servicex = servicex + '// CEK EXIST\n'
         servicex = servicex + ' //function untuk get' + tableName + ' biar bisa dipakai berulang\n' +
-            'static async check' + tableName + 'Mustexist( ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id: number): Promise<' + tableName + '> {\n' +
+            'static async check' + tableName + 'Mustexist( ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id: string): Promise<' + tableName + '> {\n' +
             'const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.findFirst({\n' +
             'where: {\n' +
             'id: ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id,\n' +
@@ -77,7 +80,7 @@ export class DevCreateService {
             '}\n\n'
 
         servicex = servicex + '// GET by Id\n'
-        servicex = servicex + ' static async get(user: User,id: number): Promise<' + tableName + 'Response> {\n' +
+        servicex = servicex + ' static async get(user: User,id: string): Promise<' + tableName + 'Response> {\n' +
             'const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await this.check' + tableName + 'Mustexist(id)\n' +
             'return to' + tableName + 'Response(' + (await Util.lowerFirstLetter(tableName)).toString() + ')\n' +
             '}\n\n'
@@ -95,7 +98,7 @@ export class DevCreateService {
         }
         servicex = servicex + ' const record = {\n' +
             '...updateRequest,//dari object yang ada\n' +
-            '...{ update_by: user.name },\n' +
+            '...{ update_by: user.username },\n' +
             '...{ update_at: new Date()}  //tambahkan username, dengan value dari object user\n' +
             '}\n' +
             ' //cek ' + tableName + ' ada atau tidak\n' +
@@ -111,7 +114,7 @@ export class DevCreateService {
             '}\n'
 
         servicex = servicex + "//REMOVE by Id\n"
-        servicex = servicex + ' static async remove(user: User, id: number): Promise<' + tableName + 'Response> {\n' +
+        servicex = servicex + ' static async remove(user: User, id: string): Promise<' + tableName + 'Response> {\n' +
             ' await this.check' + tableName + 'Mustexist( id)\n' +
             ' const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.delete({\n' +
             ' where: {\n' +
@@ -171,7 +174,7 @@ export class DevCreateService {
             '    }\n' +
             '}\n}\n'
         servicex = servicex + '\n}'
-        console.log(servicex)
+        // console.log(servicex)
         return servicex
     }
 }

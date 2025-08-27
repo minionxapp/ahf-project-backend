@@ -7,7 +7,7 @@ exports.apiRouter = void 0;
 const express_1 = __importDefault(require("express"));
 const auth_middleware_1 = require("../middleware/auth-middleware");
 const user_controller_1 = require("../controller/user-controller");
-const contact_controller_1 = require("../controller/contact-controller");
+// import { ContactController } from "../controller/contact-controller";
 const dev_project_controller_1 = require("../controller/dev-project-controller");
 const dev_tablex_controller_1 = require("../controller/dev-tablex-controller");
 const DevTableKolom_controller_1 = require("../controller/DevTableKolom-controller");
@@ -23,12 +23,13 @@ exports.apiRouter.post("/api/users", user_controller_1.UserController.register);
 exports.apiRouter.get("/api/users", user_controller_1.UserController.search);
 exports.apiRouter.delete("/api/users/:username", user_controller_1.UserController.remove);
 exports.apiRouter.put("/api/users/:username", user_controller_1.UserController.update);
+exports.apiRouter.get("/api/users/:username", user_controller_1.UserController.getbyusername);
 //Contact API  \\d --> validasi hanya untuk number
-exports.apiRouter.post("/api/contacts", contact_controller_1.ContactController.create);
-exports.apiRouter.get("/api/contacts/:contactId", contact_controller_1.ContactController.get);
-exports.apiRouter.put("/api/contacts/:contactId", contact_controller_1.ContactController.update);
-exports.apiRouter.delete("/api/contacts/:contactId", contact_controller_1.ContactController.remove);
-exports.apiRouter.get("/api/contacts", contact_controller_1.ContactController.search);
+// apiRouter.post("/api/contacts", ContactController.create)
+// apiRouter.get("/api/contacts/:contactId", ContactController.get)
+// apiRouter.put("/api/contacts/:contactId", ContactController.update)
+// apiRouter.delete("/api/contacts/:contactId", ContactController.remove)
+// apiRouter.get("/api/contacts", ContactController.search)
 //ROUTE Dev_tablex
 exports.apiRouter.get("/api/dev_tablexs/projectid/:dev_tablexId", dev_tablex_controller_1.Dev_tablexController.getByProjectId);
 exports.apiRouter.post("/api/dev_tablexs", dev_tablex_controller_1.Dev_tablexController.create);
@@ -60,117 +61,131 @@ exports.apiRouter.get("/api/groups/:groupId", Group_controller_1.GroupController
 exports.apiRouter.put("/api/groups/:groupId", Group_controller_1.GroupController.update);
 exports.apiRouter.delete("/api/groups/:groupId", Group_controller_1.GroupController.remove);
 exports.apiRouter.get("/api/groups", Group_controller_1.GroupController.search);
-//ROUTE TestAja
-const TestAja_controller_1 = require("../controller/TestAja-controller");
-exports.apiRouter.post("/api/testajas", TestAja_controller_1.TestAjaController.create);
-exports.apiRouter.get("/api/testajas/:testAjaId", TestAja_controller_1.TestAjaController.get);
-exports.apiRouter.put("/api/testajas/:testAjaId", TestAja_controller_1.TestAjaController.update);
-exports.apiRouter.delete("/api/testajas/:testAjaId", TestAja_controller_1.TestAjaController.remove);
-exports.apiRouter.get("/api/testajas", TestAja_controller_1.TestAjaController.search);
-//ROUTE Pmakai
-const Pmakai_controller_1 = require("../controller/Pmakai-controller");
-exports.apiRouter.post("/api/pmakais", Pmakai_controller_1.PmakaiController.create);
-exports.apiRouter.get("/api/pmakais/:pmakaiId", Pmakai_controller_1.PmakaiController.get);
-exports.apiRouter.put("/api/pmakais/:pmakaiId", Pmakai_controller_1.PmakaiController.update);
-exports.apiRouter.delete("/api/pmakais/:pmakaiId", Pmakai_controller_1.PmakaiController.remove);
-exports.apiRouter.get("/api/pmakais", Pmakai_controller_1.PmakaiController.search);
-//ROUTE JobFamily
-const JobFamily_controller_1 = require("../controller/JobFamily-controller");
-exports.apiRouter.post("/api/jobfamilys", JobFamily_controller_1.JobFamilyController.create);
-exports.apiRouter.get("/api/jobfamilys/:jobFamilyId", JobFamily_controller_1.JobFamilyController.get);
-exports.apiRouter.put("/api/jobfamilys/:jobFamilyId", JobFamily_controller_1.JobFamilyController.update);
-exports.apiRouter.delete("/api/jobfamilys/:jobFamilyId", JobFamily_controller_1.JobFamilyController.remove);
-exports.apiRouter.get("/api/jobfamilys", JobFamily_controller_1.JobFamilyController.search);
-//ROUTE SubJobFamily
-const SubJobFamily_controller_1 = require("../controller/SubJobFamily-controller");
-exports.apiRouter.post("/api/subjobfamilys", SubJobFamily_controller_1.SubJobFamilyController.create);
-exports.apiRouter.get("/api/subjobfamilys/:subJobFamilyId", SubJobFamily_controller_1.SubJobFamilyController.get);
-exports.apiRouter.put("/api/subjobfamilys/:subJobFamilyId", SubJobFamily_controller_1.SubJobFamilyController.update);
-exports.apiRouter.delete("/api/subjobfamilys/:subJobFamilyId", SubJobFamily_controller_1.SubJobFamilyController.remove);
-exports.apiRouter.get("/api/subjobfamilys", SubJobFamily_controller_1.SubJobFamilyController.search);
-//ROUTE Kompetensi
-const Kompetensi_controller_1 = require("../controller/Kompetensi-controller");
-exports.apiRouter.post("/api/kompetensis", Kompetensi_controller_1.KompetensiController.create);
-exports.apiRouter.get("/api/kompetensis/:kompetensiId", Kompetensi_controller_1.KompetensiController.get);
-exports.apiRouter.put("/api/kompetensis/:kompetensiId", Kompetensi_controller_1.KompetensiController.update);
-exports.apiRouter.delete("/api/kompetensis/:kompetensiId", Kompetensi_controller_1.KompetensiController.remove);
-exports.apiRouter.get("/api/kompetensis", Kompetensi_controller_1.KompetensiController.search);
-//ROUTE Akademi
-const Akademi_controller_1 = require("../controller/Akademi-controller");
-exports.apiRouter.post("/api/akademis", Akademi_controller_1.AkademiController.create);
-exports.apiRouter.get("/api/akademis/:akademiId", Akademi_controller_1.AkademiController.get);
-exports.apiRouter.put("/api/akademis/:akademiId", Akademi_controller_1.AkademiController.update);
-exports.apiRouter.delete("/api/akademis/:akademiId", Akademi_controller_1.AkademiController.remove);
-exports.apiRouter.get("/api/akademis", Akademi_controller_1.AkademiController.search);
-exports.apiRouter.get("/api/akademibyuser/:username", Akademi_controller_1.AkademiController.getAkademiByUsername);
-// akademiByUsername
-//ROUTE UserAkademi
-const UserAkademi_controller_1 = require("../controller/UserAkademi-controller");
-exports.apiRouter.post("/api/userakademis", UserAkademi_controller_1.UserAkademiController.create);
-exports.apiRouter.get("/api/userakademis/:userAkademiId", UserAkademi_controller_1.UserAkademiController.get);
-exports.apiRouter.put("/api/userakademis/:userAkademiId", UserAkademi_controller_1.UserAkademiController.update);
-exports.apiRouter.delete("/api/userakademis/:userAkademiId", UserAkademi_controller_1.UserAkademiController.remove);
-exports.apiRouter.get("/api/userakademis", UserAkademi_controller_1.UserAkademiController.search);
-//ROUTE StatusTraining
-const StatusTraining_controller_1 = require("../controller/StatusTraining-controller");
-exports.apiRouter.post("/api/statustrainings", StatusTraining_controller_1.StatusTrainingController.create);
-exports.apiRouter.get("/api/statustrainings/:statusTrainingId", StatusTraining_controller_1.StatusTrainingController.get);
-exports.apiRouter.put("/api/statustrainings/:statusTrainingId", StatusTraining_controller_1.StatusTrainingController.update);
-exports.apiRouter.delete("/api/statustrainings/:statusTrainingId", StatusTraining_controller_1.StatusTrainingController.remove);
-exports.apiRouter.get("/api/statustrainings", StatusTraining_controller_1.StatusTrainingController.search);
+//ROUTE UserProject
+const User_project_controller_1 = require("../controller/User-project-controller");
+exports.apiRouter.post("/api/userprojects", User_project_controller_1.UserProjectController.create);
+exports.apiRouter.get("/api/userprojects/:userProjectId", User_project_controller_1.UserProjectController.get);
+exports.apiRouter.put("/api/userprojects/:userProjectId", User_project_controller_1.UserProjectController.update);
+exports.apiRouter.delete("/api/userprojects/:userProjectId", User_project_controller_1.UserProjectController.remove);
+exports.apiRouter.get("/api/userprojects", User_project_controller_1.UserProjectController.search);
 //ROUTE Seq
 const Seq_controller_1 = require("../controller/Seq-controller");
 exports.apiRouter.post("/api/seqs", Seq_controller_1.SeqController.create);
-exports.apiRouter.get("/api/seqs/:seqId", Seq_controller_1.SeqController.get);
 exports.apiRouter.put("/api/seqs/:seqId", Seq_controller_1.SeqController.update);
 exports.apiRouter.delete("/api/seqs/:seqId", Seq_controller_1.SeqController.remove);
+exports.apiRouter.get("/api/seqs/:seqId", Seq_controller_1.SeqController.get);
 exports.apiRouter.get("/api/seqs", Seq_controller_1.SeqController.search);
-//ROUTE Training
-const Training_controller_1 = require("../controller/Training-controller");
-exports.apiRouter.post("/api/trainings", Training_controller_1.TrainingController.create);
-exports.apiRouter.get("/api/trainings/:trainingId", Training_controller_1.TrainingController.get);
-exports.apiRouter.put("/api/trainings/:trainingId", Training_controller_1.TrainingController.update);
-exports.apiRouter.delete("/api/trainings/:trainingId", Training_controller_1.TrainingController.remove);
-exports.apiRouter.get("/api/trainings", Training_controller_1.TrainingController.search);
-//ROUTE TipeTraining
-const TipeTraining_controller_1 = require("../controller/TipeTraining-controller");
-exports.apiRouter.post("/api/tipetrainings", TipeTraining_controller_1.TipeTrainingController.create);
-exports.apiRouter.get("/api/tipetrainings/:tipeTrainingId", TipeTraining_controller_1.TipeTrainingController.get);
-exports.apiRouter.put("/api/tipetrainings/:tipeTrainingId", TipeTraining_controller_1.TipeTrainingController.update);
-exports.apiRouter.delete("/api/tipetrainings/:tipeTrainingId", TipeTraining_controller_1.TipeTrainingController.remove);
-exports.apiRouter.get("/api/tipetrainings", TipeTraining_controller_1.TipeTrainingController.search);
-//ROUTE SubKompetensi
-const SubKompetensi_controller_1 = require("../controller/SubKompetensi-controller");
-exports.apiRouter.post("/api/subkompetensis", SubKompetensi_controller_1.SubKompetensiController.create);
-exports.apiRouter.get("/api/subkompetensis/:subKompetensiId", SubKompetensi_controller_1.SubKompetensiController.get);
-exports.apiRouter.put("/api/subkompetensis/:subKompetensiId", SubKompetensi_controller_1.SubKompetensiController.update);
-exports.apiRouter.delete("/api/subkompetensis/:subKompetensiId", SubKompetensi_controller_1.SubKompetensiController.remove);
-exports.apiRouter.get("/api/subkompetensis", SubKompetensi_controller_1.SubKompetensiController.search);
-//ROUTE KompetensiLevel
-const KompetensiLevel_controller_1 = require("../controller/KompetensiLevel-controller");
-exports.apiRouter.post("/api/kompetensilevels", KompetensiLevel_controller_1.KompetensiLevelController.create);
-exports.apiRouter.get("/api/kompetensilevels/:kompetensiLevelId", KompetensiLevel_controller_1.KompetensiLevelController.get);
-exports.apiRouter.put("/api/kompetensilevels/:kompetensiLevelId", KompetensiLevel_controller_1.KompetensiLevelController.update);
-exports.apiRouter.delete("/api/kompetensilevels/:kompetensiLevelId", KompetensiLevel_controller_1.KompetensiLevelController.remove);
-exports.apiRouter.get("/api/kompetensilevels", KompetensiLevel_controller_1.KompetensiLevelController.search);
-//ROUTE Checklist
-const Checklist_controller_1 = require("../controller/Checklist-controller");
-exports.apiRouter.post("/api/checklists", Checklist_controller_1.ChecklistController.create);
-exports.apiRouter.get("/api/checklists/:checklistId", Checklist_controller_1.ChecklistController.get);
-exports.apiRouter.put("/api/checklists/:checklistId", Checklist_controller_1.ChecklistController.update);
-exports.apiRouter.delete("/api/checklists/:checklistId", Checklist_controller_1.ChecklistController.remove);
-exports.apiRouter.get("/api/checklists", Checklist_controller_1.ChecklistController.search);
-//ROUTE TrainingChecklist
-const TrainingChecklist_controller_1 = require("../controller/TrainingChecklist-controller");
-exports.apiRouter.post("/api/trainingchecklists", TrainingChecklist_controller_1.TrainingChecklistController.create);
-exports.apiRouter.get("/api/trainingchecklists/:trainingChecklistId", TrainingChecklist_controller_1.TrainingChecklistController.get);
-exports.apiRouter.put("/api/trainingchecklists/:trainingChecklistId", TrainingChecklist_controller_1.TrainingChecklistController.update);
-exports.apiRouter.delete("/api/trainingchecklists/:trainingChecklistId", TrainingChecklist_controller_1.TrainingChecklistController.remove);
-exports.apiRouter.get("/api/trainingchecklists", TrainingChecklist_controller_1.TrainingChecklistController.search);
-//ROUTE Brand
-const Brand_controller_1 = require("../controller/Brand-controller");
-exports.apiRouter.post("/api/brands", Brand_controller_1.BrandController.create);
-exports.apiRouter.get("/api/brands/:brandId", Brand_controller_1.BrandController.get);
-exports.apiRouter.put("/api/brands/:brandId", Brand_controller_1.BrandController.update);
-exports.apiRouter.delete("/api/brands/:brandId", Brand_controller_1.BrandController.remove);
-exports.apiRouter.get("/api/brands", Brand_controller_1.BrandController.search);
+//ROUTE TableCoba
+const TableCoba_controller_1 = require("../controller/TableCoba-controller");
+exports.apiRouter.post("/api/tablecobas", TableCoba_controller_1.TableCobaController.create);
+exports.apiRouter.get("/api/tablecobas/:tableCobaId", TableCoba_controller_1.TableCobaController.get);
+exports.apiRouter.put("/api/tablecobas/:tableCobaId", TableCoba_controller_1.TableCobaController.update);
+exports.apiRouter.delete("/api/tablecobas/:tableCobaId", TableCoba_controller_1.TableCobaController.remove);
+exports.apiRouter.get("/api/tablecobas", TableCoba_controller_1.TableCobaController.search);
+// //ROUTE TestAja
+// import {TestAjaController } from "../controller/TestAja-controller";
+// apiRouter.post("/api/testajas",TestAjaController.create)
+// apiRouter.get("/api/testajas/:testAjaId",TestAjaController.get)
+// apiRouter.put("/api/testajas/:testAjaId",TestAjaController.update)
+// apiRouter.delete("/api/testajas/:testAjaId", TestAjaController.remove)
+// apiRouter.get("/api/testajas", TestAjaController.search)
+// //ROUTE Pmakai
+// import {PmakaiController } from "../controller/Pmakai-controller";
+// apiRouter.post("/api/pmakais",PmakaiController.create)
+// apiRouter.get("/api/pmakais/:pmakaiId",PmakaiController.get)
+// apiRouter.put("/api/pmakais/:pmakaiId",PmakaiController.update)
+// apiRouter.delete("/api/pmakais/:pmakaiId", PmakaiController.remove)
+// apiRouter.get("/api/pmakais", PmakaiController.search)
+// //ROUTE JobFamily
+// import {JobFamilyController } from "../controller/JobFamily-controller";
+// apiRouter.post("/api/jobfamilys",JobFamilyController.create)
+// apiRouter.get("/api/jobfamilys/:jobFamilyId",JobFamilyController.get)
+// apiRouter.put("/api/jobfamilys/:jobFamilyId",JobFamilyController.update)
+// apiRouter.delete("/api/jobfamilys/:jobFamilyId", JobFamilyController.remove)
+// apiRouter.get("/api/jobfamilys", JobFamilyController.search)
+// //ROUTE SubJobFamily
+// import {SubJobFamilyController } from "../controller/SubJobFamily-controller";
+// apiRouter.post("/api/subjobfamilys",SubJobFamilyController.create)
+// apiRouter.get("/api/subjobfamilys/:subJobFamilyId",SubJobFamilyController.get)
+// apiRouter.put("/api/subjobfamilys/:subJobFamilyId",SubJobFamilyController.update)
+// apiRouter.delete("/api/subjobfamilys/:subJobFamilyId", SubJobFamilyController.remove)
+// apiRouter.get("/api/subjobfamilys", SubJobFamilyController.search)
+// //ROUTE Kompetensi
+// import {KompetensiController } from "../controller/Kompetensi-controller";
+// apiRouter.post("/api/kompetensis",KompetensiController.create)
+// apiRouter.get("/api/kompetensis/:kompetensiId",KompetensiController.get)
+// apiRouter.put("/api/kompetensis/:kompetensiId",KompetensiController.update)
+// apiRouter.delete("/api/kompetensis/:kompetensiId", KompetensiController.remove)
+// apiRouter.get("/api/kompetensis", KompetensiController.search)
+// //ROUTE Akademi
+// import {AkademiController } from "../controller/Akademi-controller";
+// apiRouter.post("/api/akademis",AkademiController.create)
+// apiRouter.get("/api/akademis/:akademiId",AkademiController.get)
+// apiRouter.put("/api/akademis/:akademiId",AkademiController.update)
+// apiRouter.delete("/api/akademis/:akademiId", AkademiController.remove)
+// apiRouter.get("/api/akademis", AkademiController.search)
+// apiRouter.get("/api/akademibyuser/:username", AkademiController.getAkademiByUsername)
+// // akademiByUsername
+// //ROUTE UserAkademi
+// import {UserAkademiController } from "../controller/UserAkademi-controller";
+// apiRouter.post("/api/userakademis",UserAkademiController.create)
+// apiRouter.get("/api/userakademis/:userAkademiId",UserAkademiController.get)
+// apiRouter.put("/api/userakademis/:userAkademiId",UserAkademiController.update)
+// apiRouter.delete("/api/userakademis/:userAkademiId", UserAkademiController.remove)
+// apiRouter.get("/api/userakademis", UserAkademiController.search)
+// //ROUTE StatusTraining
+// import {StatusTrainingController } from "../controller/StatusTraining-controller";
+// apiRouter.post("/api/statustrainings",StatusTrainingController.create)
+// apiRouter.get("/api/statustrainings/:statusTrainingId",StatusTrainingController.get)
+// apiRouter.put("/api/statustrainings/:statusTrainingId",StatusTrainingController.update)
+// apiRouter.delete("/api/statustrainings/:statusTrainingId", StatusTrainingController.remove)
+// apiRouter.get("/api/statustrainings", StatusTrainingController.search)
+// //ROUTE Training
+// import {TrainingController } from "../controller/Training-controller";
+// apiRouter.post("/api/trainings",TrainingController.create)
+// apiRouter.get("/api/trainings/:trainingId",TrainingController.get)
+// apiRouter.put("/api/trainings/:trainingId",TrainingController.update)
+// apiRouter.delete("/api/trainings/:trainingId", TrainingController.remove)
+// apiRouter.get("/api/trainings", TrainingController.search)
+// //ROUTE TipeTraining
+// import {TipeTrainingController } from "../controller/TipeTraining-controller";
+// apiRouter.post("/api/tipetrainings",TipeTrainingController.create)
+// apiRouter.get("/api/tipetrainings/:tipeTrainingId",TipeTrainingController.get)
+// apiRouter.put("/api/tipetrainings/:tipeTrainingId",TipeTrainingController.update)
+// apiRouter.delete("/api/tipetrainings/:tipeTrainingId", TipeTrainingController.remove)
+// apiRouter.get("/api/tipetrainings", TipeTrainingController.search)
+// //ROUTE SubKompetensi
+// import {SubKompetensiController } from "../controller/SubKompetensi-controller";
+// apiRouter.post("/api/subkompetensis",SubKompetensiController.create)
+// apiRouter.get("/api/subkompetensis/:subKompetensiId",SubKompetensiController.get)
+// apiRouter.put("/api/subkompetensis/:subKompetensiId",SubKompetensiController.update)
+// apiRouter.delete("/api/subkompetensis/:subKompetensiId", SubKompetensiController.remove)
+// apiRouter.get("/api/subkompetensis", SubKompetensiController.search)
+// //ROUTE KompetensiLevel
+// import {KompetensiLevelController } from "../controller/KompetensiLevel-controller";
+// apiRouter.post("/api/kompetensilevels",KompetensiLevelController.create)
+// apiRouter.get("/api/kompetensilevels/:kompetensiLevelId",KompetensiLevelController.get)
+// apiRouter.put("/api/kompetensilevels/:kompetensiLevelId",KompetensiLevelController.update)
+// apiRouter.delete("/api/kompetensilevels/:kompetensiLevelId", KompetensiLevelController.remove)
+// apiRouter.get("/api/kompetensilevels", KompetensiLevelController.search)
+// //ROUTE Checklist
+// import {ChecklistController } from "../controller/Checklist-controller";
+// apiRouter.post("/api/checklists",ChecklistController.create)
+// apiRouter.get("/api/checklists/:checklistId",ChecklistController.get)
+// apiRouter.put("/api/checklists/:checklistId",ChecklistController.update)
+// apiRouter.delete("/api/checklists/:checklistId", ChecklistController.remove)
+// apiRouter.get("/api/checklists", ChecklistController.search)
+// //ROUTE TrainingChecklist
+// import {TrainingChecklistController } from "../controller/TrainingChecklist-controller";
+// apiRouter.post("/api/trainingchecklists",TrainingChecklistController.create)
+// apiRouter.get("/api/trainingchecklists/:trainingChecklistId",TrainingChecklistController.get)
+// apiRouter.put("/api/trainingchecklists/:trainingChecklistId",TrainingChecklistController.update)
+// apiRouter.delete("/api/trainingchecklists/:trainingChecklistId", TrainingChecklistController.remove)
+// apiRouter.get("/api/trainingchecklists", TrainingChecklistController.search)
+// //ROUTE Brand
+// import {BrandController } from "../controller/Brand-controller";
+// apiRouter.post("/api/brands",BrandController.create)
+// apiRouter.get("/api/brands/:brandId",BrandController.get)
+// apiRouter.put("/api/brands/:brandId",BrandController.update)
+// apiRouter.delete("/api/brands/:brandId", BrandController.remove)
+// apiRouter.get("/api/brands", BrandController.search)

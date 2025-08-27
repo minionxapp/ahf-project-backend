@@ -75,6 +75,7 @@ class Dev_projectController {
                 const request = {
                     name: req.query.name,
                     desc: req.query.desc,
+                    create_by: req.query.create_by,
                     page: req.query.page ? Number(req.query.page) : 1,
                     size: req.query.size ? Number(req.query.size) : 10,
                 };

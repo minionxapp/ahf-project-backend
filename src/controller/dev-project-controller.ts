@@ -56,6 +56,7 @@ export class Dev_projectController {
             const request: SearchDev_projectRequest = {
                 name: req.query.name as string,
                 desc: req.query.desc as string,
+                create_by:req.query.create_by as string,
                 page: req.query.page ? Number(req.query.page) : 1,
                 size: req.query.size ? Number(req.query.size) : 10,
             }

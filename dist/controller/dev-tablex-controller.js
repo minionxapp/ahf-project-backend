@@ -79,6 +79,7 @@ class Dev_tablexController {
                     project_id: Number(req.query.project_id),
                     page: req.query.page ? Number(req.query.page) : 1,
                     size: req.query.size ? Number(req.query.size) : 10,
+                    create_by: req.query.create_by,
                 };
                 const response = yield dev_tablex_service_1.Dev_tablexService.search(req.user, request);
                 res.status(200).json(response);

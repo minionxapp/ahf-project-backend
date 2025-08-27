@@ -82,20 +82,18 @@ class UserService {
             return (0, user_model_1.toUserResponse)(user);
         });
     }
+    static getbyusername(user, username) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const userfind = yield this.checkUserMustexist(username);
+            console.log("getuserbyname ............." + username);
+            console.log(userfind);
+            return (0, user_model_1.toUserResponse)(userfind);
+        });
+    }
     static update(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
             //validasi
-            console.log("request\n" + JSON.stringify(request));
             const updateRequest = validation_1.Validation.validate(user_validation_1.UserValidation.UPDATE, request);
-            //unutk cek, yang hanya bisa update dirinya sendiri /masing masing user yang login
-            // if (updateRequest.name) {
-            //     user.name = updateRequest.name
-            // }
-            // if (updateRequest.password) {
-            //     user.password = await bcrypt.hash(updateRequest.password, 10)
-            // }
-            console.log("\nUptdareguestt...................................");
-            console.log(updateRequest);
             const record = Object.assign(Object.assign(Object.assign({}, updateRequest), { update_by: user.name }), { update_at: new Date() } //tambahkan username, dengan value dari object user
             );
             const result = yield database_1.prismaClient.user.update({
@@ -126,7 +124,6 @@ class UserService {
             const searchRequest = validation_1.Validation.validate(user_validation_1.UserValidation.SEARCH, request);
             const skip = (searchRequest.page - 1) * searchRequest.size;
             const filters = [];
-            // check if name exists
             // check if username exists
             if (searchRequest.username) {
                 filters.push({

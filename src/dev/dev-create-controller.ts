@@ -12,11 +12,15 @@ export class DevCreateController{
             const fileName = await Util.fileNameFormat(tableName)
             const columns = await DevUtil.getColoumn(tabelId)
             let controller = '\n//Create Controller '+tableName+'-controller.ts\n\n'
-    
+    //  const tableName = await Util.camelCase(await Util.capitalizeFirstLetter(table.name))
             controller = controller + 'import { Response,NextFunction } from "express";\n' +
                 'import { UserRequest } from "../type/user-request";\n' +
-                'import { Create' + tableName + 'Request,Search' + tableName + 'Request,Update' + tableName + 'Request } from "../model/' + tableName + '-model";\n' +
-                'import { ' + tableName + 'Service } from "../service/' + tableName + '-service";\n' +
+                'import { Create' + tableName + 'Request,Search' + tableName + 'Request,Update' + tableName + 'Request } from "../model/' + 
+                // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-") + 
+                tableName+'-model";\n' +
+                'import { ' + tableName + 'Service } from "../service/' + 
+                // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-") +
+                 tableName+'-service";\n' +
                 'import { number } from "zod";\n' +
                 'export class ' + tableName + 'Controller{\n' +
                 ' static async create(req:UserRequest,res:Response, next:NextFunction){\n' +
@@ -27,13 +31,13 @@ export class DevCreateController{
                 '               data: response\n' +
                 '           })\n' +
                 '       } catch (error) {\n' +
-                '           next(error)\n' +
+                '           next(error)\n' + 
                 '       }\n' +
                 '   }\n'
             //GET
             controller = controller + ' static async get(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 'try {\n' +
-                '    const ' + tableNameLow + 'Id = Number(req.params.' + tableNameLow + 'Id)\n' +
+                '    const ' + tableNameLow + 'Id = (req.params.' + tableNameLow + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.get(req.user!, ' + tableNameLow + 'Id)\n' +
                 '   res.status(200).json({\n' +
                 '       data: response\n' +
@@ -46,7 +50,7 @@ export class DevCreateController{
             controller = controller + 'static async update(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 ' try {\n' +
                 '    const request : Update' + tableName + 'Request = req.body as Update' + tableName + 'Request;\n' +
-                '    request.id = Number(req.params.' + tableNameLow + 'Id)\n' +
+                '    request.id = (req.params.' + tableNameLow + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.update(req.user!, request)\n' +
                 '    res.status(200).json({\n' +
                 '        data: response\n' +
@@ -59,7 +63,7 @@ export class DevCreateController{
             //REMOVE
             controller = controller + ' static async remove(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 'try {\n' +
-                '    const ' + tableNameLow + 'Id = Number(req.params.' + tableNameLow + 'Id)\n' +
+                '    const ' + tableNameLow + 'Id = (req.params.' + tableNameLow + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.remove(req.user!, ' + tableNameLow + 'Id)\n' +
                 '    res.status(200).json({\n' +
                 '       data: "OK"\n' +
@@ -94,7 +98,7 @@ export class DevCreateController{
                 '} \n'
     
             controller = controller + '}'
-            console.log(controller)
+            // console.log(controller)
             return controller
         }
 }

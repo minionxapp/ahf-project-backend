@@ -108,6 +108,7 @@ class DevTableKolomController {
                     size: req.query.size ? Number(req.query.size) : 10,
                 };
                 const response = yield DevTableKolom_service_1.DevTableKolomService.search(req.user, request);
+                console.log(response);
                 res.status(200).json(response);
             }
             catch (e) {

@@ -1,5 +1,5 @@
 "use strict";
-//Create Service 
+//Create Service TableCoba-service.ts
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,132 +10,111 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TablecobaService = void 0;
-//utuk coba--> disesuaikan dulu
+exports.TableCobaService = void 0;
 const database_1 = require("../application/database");
 const response_error_1 = require("../error/response-error");
-const tablecoba_model_1 = require("../model/tablecoba-model");
-const tablecoba_validation_1 = require("../validation/tablecoba-validation");
+const TableCoba_model_1 = require("../model/TableCoba-model");
+const TableCoba_validation_1 = require("../validation/TableCoba-validation");
 const validation_1 = require("../validation/validation");
-class TablecobaService {
+class TableCobaService {
+    //CREATE 
     static create(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const createRequest = validation_1.Validation.validate(tablecoba_validation_1.TablecobaValidation.CREATE, request);
-            const record = Object.assign(Object.assign({}, createRequest), { username: user.name } //tambahkan username, dengan value dari object user
-            );
-            const tablecoba = yield database_1.prismaClient.tablecoba.create({
+            const createRequest = validation_1.Validation.validate(TableCoba_validation_1.TableCobaValidation.CREATE, request);
+            //belum ada validasi bila tidak boleh sama (uniq) dalam kolom
+            //Ubah dulu format datenya spt ini ::2025-03-01T00:00:00.000Z
+            const totalkodeUniq = yield database_1.prismaClient.tableCoba.count({
+                where: {
+                    kode: createRequest.kode
+                }
+            });
+            if (totalkodeUniq != 0) {
+                throw new response_error_1.ResponseError(400, "kode already axist");
+            }
+            const record = Object.assign(Object.assign(Object.assign({}, createRequest), { create_by: user.username }), { create_at: new Date() }); //tambahkan username, dengan value dari object user}
+            const tableCoba = yield database_1.prismaClient.tableCoba.create({
                 data: record
             });
-            return (0, tablecoba_model_1.toTablecobaResponse)(tablecoba);
+            return (0, TableCoba_model_1.toTableCobaResponse)(tableCoba);
         });
     }
     // CEK EXIST
-    //function untuk getTablecoba biar bisa dipakai berulang
-    static checkTablecobaMustexist(tablecobaId) {
+    //function untuk getTableCoba biar bisa dipakai berulang
+    static checkTableCobaMustexist(tableCobaId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const tablecoba = yield database_1.prismaClient.tablecoba.findFirst({
+            const tableCoba = yield database_1.prismaClient.tableCoba.findFirst({
                 where: {
-                    id: tablecobaId,
+                    id: tableCobaId,
                 }
             });
-            if (!tablecoba) {
-                throw new response_error_1.ResponseError(404, "Contact not found");
+            if (!tableCoba) {
+                throw new response_error_1.ResponseError(404, "TableCoba not found");
             }
-            return tablecoba;
+            return tableCoba;
         });
     }
-    // GET
+    // GET by Id
     static get(user, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const tablecoba = yield this.checkTablecobaMustexist(id);
-            return (0, tablecoba_model_1.toTablecobaResponse)(tablecoba);
+            const tableCoba = yield this.checkTableCobaMustexist(id);
+            return (0, TableCoba_model_1.toTableCobaResponse)(tableCoba);
         });
     }
-    // UPDATE
+    // UPDATE by Id
     static update(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const updateRequest = validation_1.Validation.validate(tablecoba_validation_1.TablecobaValidation.UPDATE, request);
-            //cek Tablecoba ada atau tidak
-            yield this.checkTablecobaMustexist(request.id);
-            const tablecoba = yield database_1.prismaClient.tablecoba.update({
+            const updateRequest = validation_1.Validation.validate(TableCoba_validation_1.TableCobaValidation.UPDATE, request);
+            const record = Object.assign(Object.assign(Object.assign({}, updateRequest), { update_by: user.username }), { update_at: new Date() } //tambahkan username, dengan value dari object user
+            );
+            //cek TableCoba ada atau tidak
+            yield this.checkTableCobaMustexist(request.id);
+            const tableCoba = yield database_1.prismaClient.tableCoba.update({
                 where: {
                     id: updateRequest.id,
                     //     username: user.username
                 },
-                data: updateRequest
+                data: record
             });
-            return (0, tablecoba_model_1.toTablecobaResponse)(tablecoba);
+            return (0, TableCoba_model_1.toTableCobaResponse)(tableCoba);
         });
     }
-    //REMOVE 
+    //REMOVE by Id
     static remove(user, id) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.checkTablecobaMustexist(id);
-            const tablecoba = yield database_1.prismaClient.tablecoba.delete({
+            yield this.checkTableCobaMustexist(id);
+            const tableCoba = yield database_1.prismaClient.tableCoba.delete({
                 where: {
                     id: id,
                     //username: user.username
                 }
             });
-            return tablecoba;
+            return tableCoba;
         });
     }
     //SEARCH 
     static search(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
-            const searchRequest = validation_1.Validation.validate(tablecoba_validation_1.TablecobaValidation.SEARCH, request);
+            const searchRequest = validation_1.Validation.validate(TableCoba_validation_1.TableCobaValidation.SEARCH, request);
             const skip = (searchRequest.page - 1) * searchRequest.size;
             const filters = [];
             // check if name exists
-            // check if first_name exists
-            if (searchRequest.first_name) {
+            // check if name exists
+            if (searchRequest.name) {
                 filters.push({
-                    first_name: {
-                        contains: searchRequest.first_name
+                    name: {
+                        contains: searchRequest.name
                     }
                 });
             }
-            // check if last_name exists
-            if (searchRequest.last_name) {
+            // check if kode exists
+            if (searchRequest.kode) {
                 filters.push({
-                    last_name: {
-                        contains: searchRequest.last_name
+                    kode: {
+                        contains: searchRequest.kode
                     }
                 });
             }
-            // check if email exists
-            if (searchRequest.email) {
-                filters.push({
-                    email: {
-                        contains: searchRequest.email
-                    }
-                });
-            }
-            // check if phone exists
-            if (searchRequest.phone) {
-                filters.push({
-                    phone: {
-                        contains: searchRequest.phone
-                    }
-                });
-            }
-            // check if address exists
-            if (searchRequest.address) {
-                filters.push({
-                    address: {
-                        contains: searchRequest.address
-                    }
-                });
-            }
-            // check if username exists
-            if (searchRequest.username) {
-                filters.push({
-                    username: {
-                        contains: searchRequest.username
-                    }
-                });
-            }
-            const tablecobas = yield database_1.prismaClient.tablecoba.findMany({
+            const tableCobas = yield database_1.prismaClient.tableCoba.findMany({
                 where: {
                     // username: user.username,
                     AND: filters
@@ -143,14 +122,14 @@ class TablecobaService {
                 take: searchRequest.size,
                 skip: skip
             });
-            const total = yield database_1.prismaClient.tablecoba.count({
+            const total = yield database_1.prismaClient.tableCoba.count({
                 where: {
                     //username: user.username,
                     AND: filters
                 },
             });
             return {
-                data: tablecobas.map(tablecoba => (0, tablecoba_model_1.toTablecobaResponse)(tablecoba)),
+                data: tableCobas.map(tableCoba => (0, TableCoba_model_1.toTableCobaResponse)(tableCoba)),
                 paging: {
                     current_page: searchRequest.page,
                     total_page: Math.ceil(total / searchRequest.size),
@@ -161,4 +140,4 @@ class TablecobaService {
         });
     }
 }
-exports.TablecobaService = TablecobaService;
+exports.TableCobaService = TableCobaService;

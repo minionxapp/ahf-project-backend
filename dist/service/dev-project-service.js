@@ -21,7 +21,7 @@ class Dev_projectService {
     static create(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
             const createRequest = validation_1.Validation.validate(dev_project_validation_1.Dev_projectValidation.CREATE, request);
-            const record = Object.assign(Object.assign(Object.assign({}, createRequest), { create_by: user.name }), { create_at: new Date() }); //tambahkan username, dengan value dari object user}
+            const record = Object.assign(Object.assign(Object.assign({}, createRequest), { create_by: user.username }), { create_at: new Date() }); //tambahkan username, dengan value dari object user}
             const dev_project = yield database_1.prismaClient.dev_project.create({
                 data: record
             });
@@ -54,7 +54,7 @@ class Dev_projectService {
     static update(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
             const updateRequest = validation_1.Validation.validate(dev_project_validation_1.Dev_projectValidation.UPDATE, request);
-            const record = Object.assign(Object.assign(Object.assign({}, updateRequest), { update_by: user.name }), { update_at: new Date() } //tambahkan username, dengan value dari object user
+            const record = Object.assign(Object.assign(Object.assign({}, updateRequest), { update_by: user.username }), { update_at: new Date() } //tambahkan username, dengan value dari object user
             );
             //cek Dev_project ada atau tidak
             yield this.checkDev_projectMustexist(request.id);
@@ -87,8 +87,14 @@ class Dev_projectService {
             const searchRequest = validation_1.Validation.validate(dev_project_validation_1.Dev_projectValidation.SEARCH, request);
             const skip = (searchRequest.page - 1) * searchRequest.size;
             const filters = [];
-            // check if name exists
-            // check if name exists
+            // check if name exists create_by
+            if (searchRequest.create_by) {
+                filters.push({
+                    create_by: {
+                        contains: searchRequest.create_by
+                    }
+                });
+            }
             if (searchRequest.name) {
                 filters.push({
                     name: {

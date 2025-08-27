@@ -73,7 +73,7 @@ class DevCreateUtilTest {
                 ' }\n';
             utiltest = utiltest + '}\n';
             utiltest = utiltest + '//tambahkan ' + tableName + ' pada import { User, Contact, Tablecoba } from "@prisma/client";';
-            console.log(utiltest);
+            // console.log(utiltest)
             return utiltest;
         });
     }

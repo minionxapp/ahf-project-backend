@@ -17,7 +17,7 @@ export class DevCreateModel {
         let model = '\n//Create Model ' + tableNameCamel + '-model.ts\n\n'
         model = model + "import { " + tableNameCamel + " } from '@prisma/client'\n"
 
-        model = model + 'export type ' + tableNameCamel + 'Response = {\nid: number,\n'
+        model = model + 'export type ' + tableNameCamel + 'Response = {\nid: string,\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.type == 'Varchar') {
@@ -43,7 +43,7 @@ export class DevCreateModel {
 
         // //createRequest
         model = model + '//Create' + tableNameCamel + 'Request\n'
-        model = model + 'export type Create' + tableNameCamel + 'Request = {\nid: number,\n'
+        model = model + 'export type Create' + tableNameCamel + 'Request = {\nid: string,\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.type == 'Varchar') {
@@ -68,7 +68,7 @@ export class DevCreateModel {
 
         // //updateRequest
         model = model + '//Update' + tableNameCamel + 'Request\n'
-        model = model + 'export type Update' + tableNameCamel + 'Request = {\nid: number,\n'
+        model = model + 'export type Update' + tableNameCamel + 'Request = {\nid: string,\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.type == 'Varchar') {
@@ -93,7 +93,7 @@ export class DevCreateModel {
 
         // //SearchRequest
         model = model + '//Search' + tableNameCamel + 'Request\n'
-        model = model + 'export type Search' + tableNameCamel + 'Request = {\n//id: number,\n'
+        model = model + 'export type Search' + tableNameCamel + 'Request = {\n//id: string,\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.type == 'Varchar') {
@@ -130,7 +130,7 @@ export class DevCreateModel {
         model = model + "}\n"
         model = model + "}\n\n"
 
-        console.log(model)
+        // console.log(model)
         return model
     }
 }

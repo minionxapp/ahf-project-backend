@@ -19,13 +19,15 @@ class DevCreateRoute {
             const tableName = yield util_1.Util.camelCase(yield util_1.Util.capitalizeFirstLetter(table.name));
             const tableNameLow = (yield util_1.Util.lowerFirstLetter(tableName)).toString();
             const fileName = yield util_1.Util.fileNameFormat(tableName);
-            let route = '\n//ROUTE ' + tableName + '\n\nimport {' + tableName + 'Controller } from "../controller/' + tableName + '-controller";\n\n\n' + '\n' +
+            let route = '\n//ROUTE ' + tableName + '\nimport {' + tableName + 'Controller } from "../controller/' +
+                // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
+                tableName + '-controller";' + '\n' +
                 'apiRouter.post("/api/' + tableNameLow.toLowerCase() + 's",' + tableName + 'Controller.create)\n' +
                 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.get)\n' +
                 'apiRouter.put("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.update)\n' +
                 'apiRouter.delete("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id", ' + tableName + 'Controller.remove)\n' +
                 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's", ' + tableName + 'Controller.search)\n';
-            console.log(route);
+            // console.log(route)
             return route;
         });
     }

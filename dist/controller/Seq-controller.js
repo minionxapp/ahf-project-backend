@@ -29,6 +29,8 @@ class SeqController {
     }
     static get(req /*sudah login*/, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            // console.log("==============================================================")
+            // console.log(req.user)
             try {
                 const seqId = Number(req.params.seqId);
                 const response = yield Seq_service_1.SeqService.get(req.user, seqId);

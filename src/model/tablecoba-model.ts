@@ -1,61 +1,40 @@
-//CreateModel
-//Tablecoba-model.ts
-import { Tablecoba } from '@prisma/client'
-export type TablecobaResponse = {
-id: number,
-first_name: string,
-last_name?: string | null,
-email: string,
-phone?: string | null,
-address?: string | null,
-username: string,
+//Create Model TableCoba-model.ts
+
+import { TableCoba } from '@prisma/client'
+export type TableCobaResponse = {
+    id: string,
+    name?: string | null,
+    kode: string,
 }
 
-//CreateTablecobaRequest
-export type CreateTablecobaRequest = {
-id: number,
-first_name: string,
-last_name?: string | null,
-email: string,
-phone?: string | null,
-address?: string | null,
-username: string,
+//CreateTableCobaRequest
+export type CreateTableCobaRequest = {
+    id: string,
+    name?: string | null,
+    kode: string,
 }
 
-//UpdateTablecobaRequest
-export type UpdateTablecobaRequest = {
-id: number,
-first_name: string,
-last_name?: string | null,
-email: string,
-phone?: string | null,
-address?: string | null,
-username: string,
+//UpdateTableCobaRequest
+export type UpdateTableCobaRequest = {
+    id: string,
+    name?: string | null,
+    kode: string,
 }
 
-//SearchTablecobaRequest
-export type SearchTablecobaRequest = {
-//id: number,
-first_name: string,
-last_name?: string | null,
-email: string,
-phone?: string | null,
-address?: string | null,
-username: string,
-page : number,
-size : number,
+//SearchTableCobaRequest
+export type SearchTableCobaRequest = {
+    //id: string,
+    name?: string | null,
+    kode: string,
+    page: number,
+    size: number,
 }
 
-//toTablecobaResponse
-export function toTablecobaResponse(tablecoba: Tablecoba): TablecobaResponse {
-return { 
-id: tablecoba.id,
-first_name:tablecoba.first_name,
-last_name:tablecoba.last_name,
-email:tablecoba.email,
-phone:tablecoba.phone,
-address:tablecoba.address,
-username:tablecoba.username,
+//toTableCobaResponse
+export function toTableCobaResponse(table_coba: TableCoba): TableCobaResponse {
+    return {
+        id: table_coba.id,
+        name: table_coba.name,
+        kode: table_coba.kode,
+    }
 }
-}
-

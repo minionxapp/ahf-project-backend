@@ -70,19 +70,16 @@ export class UserService {
         return toUserResponse(user);
     }
 
+     static async getbyusername(user: User,username : string): Promise<UserResponse> {
+         const userfind = await this.checkUserMustexist(username)
+         console.log("getuserbyname ............."+username)
+         console.log(userfind)
+        return toUserResponse(userfind);
+    }
+
     static async update(user: User, request: UpdateUserRequest): Promise<UserResponse> {
         //validasi
-        console.log("request\n"+JSON.stringify(request))
         const updateRequest = Validation.validate(UserValidation.UPDATE, request)
-        //unutk cek, yang hanya bisa update dirinya sendiri /masing masing user yang login
-        // if (updateRequest.name) {
-        //     user.name = updateRequest.name
-        // }
-        // if (updateRequest.password) {
-        //     user.password = await bcrypt.hash(updateRequest.password, 10)
-        // }
-        console.log("\nUptdareguestt...................................")
-        console.log(updateRequest)
         const record = {
             ...updateRequest,//dari object yang ada
             ...{ update_by: user.name },
@@ -118,7 +115,6 @@ export class UserService {
         const searchRequest = Validation.validate(UserValidation.SEARCH, request);
         const skip = (searchRequest.page - 1) * searchRequest.size;
         const filters = [];
-        // check if name exists
         // check if username exists
         if (searchRequest.username) {
             filters.push({

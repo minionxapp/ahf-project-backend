@@ -1,7 +1,7 @@
-import { DevTableColumn } from "@prisma/client"
-import { prismaClient } from "../application/database"
+// import { DevTableColumn } from "@prisma/client"
+// import { prismaClient } from "../application/database"
+// import { DevTableColumnResponse, DevTableResponse, toDevTableColumnResponse, toDevTableResponse } from "../dev/dev-model"
 import { Util } from "../util/util";
-import { DevTableColumnResponse, DevTableResponse, toDevTableColumnResponse, toDevTableResponse } from "../dev/dev-model"
 import {DevUtil} from '../dev/dev-util'
 
 
@@ -15,7 +15,7 @@ static async createSchema(tabelId: number): Promise<String> {
          const tableNameLow = (await Util.lowerFirstLetter(tableNamex)).toString()
         let model = "\n//Create Schema "+tableName+"\n\n"
         model = model + 'model ' + (await Util.capitalizeFirstLetter(tableName)).toString() + ' {\n'
-        model = model + 'id         Int    @id @default(autoincrement())\n'
+        model = model + 'id         String    @id @default(uuid())\n'
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             model = model + element.name
@@ -45,7 +45,7 @@ static async createSchema(tabelId: number): Promise<String> {
         model = model + '@@map("' + (tableNameLow) + 's")\n'
             //  model = model + '@@map("' + (await Util.snackCase(tableName)) + 's")\n'
         model = model + "}\n"
-        console.log(model)
+        // console.log(model)
         return model
     }
 

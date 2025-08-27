@@ -1,6 +1,0 @@
--- AlterTable
-ALTER TABLE `users` ADD COLUMN `email` VARCHAR(250) NULL,
-    ADD COLUMN `expired` DATETIME(3) NULL,
-    ADD COLUMN `group` VARCHAR(100) NULL,
-    ADD COLUMN `status` VARCHAR(20) NULL,
-    MODIFY `create_by` VARCHAR(20) NOT NULL DEFAULT 'dev';

@@ -17,7 +17,9 @@ export class DevCreateTest {
             ' import { ' + ' UserTest } from "../test/test-util"\n' +
             ' import { logger } from "../src/application/logging"\n' +
             'import { prismaClient } from "../src/application/database";\n' +
-            'import {' + tableName + 'Test} from "../test/util/' + tableName + '-util-test"'
+            'import {' + tableName + 'Test} from "../test/util/' +
+            //  (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
+             tableName+'-util-test"'
         //create test
         test = test + '//Create test\n' +
             ' describe("POST /api/' + tableNameLow + 's", () => {\n' +
@@ -297,7 +299,7 @@ export class DevCreateTest {
 
         test = test + '})\n'//end of it
         test = test + '})\n'//end of describe
-        console.log(test)
+        // console.log(test)
         return test
 
     }

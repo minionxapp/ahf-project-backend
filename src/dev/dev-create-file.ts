@@ -17,10 +17,9 @@ export class DevCreateFile {
     static async createScriptFiles(tabelId: number, createFile: string): Promise<String> {
         const table = await DevUtil.getTable(tabelId)
         const tableName = (await Util.camelCase(await Util.capitalizeFirstLetter(table.name)))
-
+        
         const tableNameCamelCase = await Util.camelCase(tableName)
         const fileName = await Util.capitalizeFirstLetter(await Util.fileNameFormat(tableName))
-        //  const tableName = await Util.camelCase(await Util.capitalizeFirstLetter(table.name))
         const columns = await DevUtil.getColoumn(tabelId)
         const devname = "tester"
         const folderProjectBack = await prismaClient.devDirektori.findFirst({
@@ -40,8 +39,8 @@ export class DevCreateFile {
         const folderSchema = 'src/coba/'//'test/'
 
 
-
-        if (createFile === 'true') {
+        if (createFile == 'true') {
+            
             file = folder + folderModel + tableName + '-model.ts\n'
             Util.createFile(file, (await DevCreateModel.createModel(tabelId)).toString())
 
@@ -60,34 +59,33 @@ export class DevCreateFile {
             file = folder + folderUtilTest + tableName + '-util-test.ts\n\n'
             Util.createFile(file, (await DevCreateUtilTest.createUtilTest(tabelId)).toString())
 
-
         }
 
+       
         file = file + "\nCREATE FILE"
-        folder = '\ntouch /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
+        let foldercreate = '\ntouch '+folder// /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
 
-
-        file = file + folder + folderModel + tableName + '-model.ts'
-        file = file + folder + folderValidation + tableName + '-validation.ts'
-        file = file + folder + folderService + tableName + '-service.ts'
-        file = file + folder + folderController + tableName + '-controller.ts'
-        file = file + folder + folderTest + tableName + '.test.ts'
-        file = file + folder + folderUtilTest + tableName + '-util-test.ts'
+        file = file + foldercreate + folderModel + tableName + '-model.ts'
+        file = file + foldercreate + folderValidation + tableName + '-validation.ts'
+        file = file + foldercreate + folderService + tableName + '-service.ts'
+        file = file + foldercreate + folderController + tableName + '-controller.ts'
+        file = file + foldercreate + folderTest + tableName + '.test.ts'
+        file = file + foldercreate + folderUtilTest + tableName + '-util-test.ts'
         // file = file + folder + folderRoute + tableName + '-route.txt'
         // file = file + folder + folderSchema + tableName + '-schema.txt\n'
 
         file = file + "\nREMOVE FILE"
-        folder = '\nrm /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
-        file = file + folder + folderModel + tableName + '-model.ts'
-        file = file + folder + folderValidation + tableName + '-validation.ts'
-        file = file + folder + folderService + tableName + '-service.ts'
-        file = file + folder + folderController + tableName + '-controller.ts'
-        file = file + folder + folderTest + tableName + '.test.ts'
-        file = file + folder + folderUtilTest + tableName + '-util-test.ts'
+        let folderremove = '\nrm '+folder// /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
+        file = file + folderremove + folderModel + tableName + '-model.ts'
+        file = file + folderremove + folderValidation + tableName + '-validation.ts'
+        file = file + folderremove + folderService + tableName + '-service.ts'
+        file = file + folderremove + folderController + tableName + '-controller.ts'
+        file = file + folderremove + folderTest + tableName + '.test.ts'
+        file = file + folderremove + folderUtilTest + tableName + '-util-test.ts'
         // file = file + folder + folderRoute + tableName + '-route.txt'
         // file = file + folder + folderSchema + tableName + '-schema.txt\n'
 
-        return file
+        return file.toString()
 
     }
 

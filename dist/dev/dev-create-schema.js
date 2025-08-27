@@ -10,6 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DevCreateSchema = void 0;
+// import { DevTableColumn } from "@prisma/client"
+// import { prismaClient } from "../application/database"
+// import { DevTableColumnResponse, DevTableResponse, toDevTableColumnResponse, toDevTableResponse } from "../dev/dev-model"
 const util_1 = require("../util/util");
 const dev_util_1 = require("../dev/dev-util");
 class DevCreateSchema {
@@ -22,7 +25,7 @@ class DevCreateSchema {
             const tableNameLow = (yield util_1.Util.lowerFirstLetter(tableNamex)).toString();
             let model = "\n//Create Schema " + tableName + "\n\n";
             model = model + 'model ' + (yield util_1.Util.capitalizeFirstLetter(tableName)).toString() + ' {\n';
-            model = model + 'id         Int    @id @default(autoincrement())\n';
+            model = model + 'id         String    @id @default(uuid())\n';
             for (let index = 0; index < columns.length; index++) {
                 const element = columns[index];
                 model = model + element.name;
@@ -53,7 +56,7 @@ class DevCreateSchema {
             model = model + '@@map("' + (tableNameLow) + 's")\n';
             //  model = model + '@@map("' + (await Util.snackCase(tableName)) + 's")\n'
             model = model + "}\n";
-            console.log(model);
+            // console.log(model)
             return model;
         });
     }

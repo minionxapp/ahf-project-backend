@@ -44,6 +44,19 @@ export class UserController {
         }
     }
 
+    static async getbyusername(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            //kirim ke serice
+            const username = (req.params.username)
+            const response = await UserService.getbyusername(req.user!,username)//!-->paksa ada
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
     static async update(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const request: UpdateUserRequest = req.body as UpdateUserRequest

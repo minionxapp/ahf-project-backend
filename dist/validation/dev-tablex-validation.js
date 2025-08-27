@@ -2,7 +2,6 @@
 //CREATE validation Dev_tablex-validation.ts
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Dev_tablexValidation = void 0;
-//CREATE validation
 const zod_1 = require("zod");
 class Dev_tablexValidation {
 }
@@ -22,6 +21,7 @@ Dev_tablexValidation.UPDATE = zod_1.z.object({
 //SEARCH validation
 Dev_tablexValidation.SEARCH = zod_1.z.object({
     project_id: zod_1.z.number().min(1).positive(),
+    create_by: zod_1.z.string().optional(),
     name: zod_1.z.string().min(1).optional(),
     desc: zod_1.z.string().min(1).optional(),
     page: zod_1.z.number().min(1).positive(),

@@ -1,4 +1,5 @@
 "use strict";
+//Create Controller TableCoba-controller.ts
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TablecobaController = void 0;
-const tablecoba_service_1 = require("../service/tablecoba-service");
-class TablecobaController {
+exports.TableCobaController = void 0;
+const TableCoba_service_1 = require("../service/TableCoba-service");
+class TableCobaController {
     static create(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const request = req.body;
-                const response = yield tablecoba_service_1.TablecobaService.create(req.user, request);
+                const response = yield TableCoba_service_1.TableCobaService.create(req.user, request);
                 res.status(200).json({
                     data: response
                 });
@@ -29,8 +30,8 @@ class TablecobaController {
     static get(req /*sudah login*/, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const tablecobaId = Number(req.params.tablecobaId);
-                const response = yield tablecoba_service_1.TablecobaService.get(req.user, tablecobaId);
+                const tableCobaId = (req.params.tableCobaId);
+                const response = yield TableCoba_service_1.TableCobaService.get(req.user, tableCobaId);
                 res.status(200).json({
                     data: response
                 });
@@ -44,8 +45,8 @@ class TablecobaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const request = req.body;
-                request.id = Number(req.params.tablecobaId);
-                const response = yield tablecoba_service_1.TablecobaService.update(req.user, request);
+                request.id = (req.params.tableCobaId);
+                const response = yield TableCoba_service_1.TableCobaService.update(req.user, request);
                 res.status(200).json({
                     data: response
                 });
@@ -58,8 +59,8 @@ class TablecobaController {
     static remove(req /*sudah login*/, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const tablecobaId = Number(req.params.tablecobaId);
-                const response = yield tablecoba_service_1.TablecobaService.remove(req.user, tablecobaId);
+                const tableCobaId = (req.params.tableCobaId);
+                const response = yield TableCoba_service_1.TableCobaService.remove(req.user, tableCobaId);
                 res.status(200).json({
                     data: "OK"
                 });
@@ -73,16 +74,12 @@ class TablecobaController {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const request = {
-                    first_name: req.query.first_name,
-                    last_name: req.query.last_name,
-                    email: req.query.email,
-                    phone: req.query.phone,
-                    address: req.query.address,
-                    username: req.query.username,
+                    name: req.query.name,
+                    kode: req.query.kode,
                     page: req.query.page ? Number(req.query.page) : 1,
                     size: req.query.size ? Number(req.query.size) : 10,
                 };
-                const response = yield tablecoba_service_1.TablecobaService.search(req.user, request);
+                const response = yield TableCoba_service_1.TableCobaService.search(req.user, request);
                 res.status(200).json(response);
             }
             catch (e) {
@@ -91,4 +88,4 @@ class TablecobaController {
         });
     }
 }
-exports.TablecobaController = TablecobaController;
+exports.TableCobaController = TableCobaController;

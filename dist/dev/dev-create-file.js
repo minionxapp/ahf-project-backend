@@ -26,7 +26,6 @@ class DevCreateFile {
             const tableName = (yield util_1.Util.camelCase(yield util_1.Util.capitalizeFirstLetter(table.name)));
             const tableNameCamelCase = yield util_1.Util.camelCase(tableName);
             const fileName = yield util_1.Util.capitalizeFirstLetter(yield util_1.Util.fileNameFormat(tableName));
-            //  const tableName = await Util.camelCase(await Util.capitalizeFirstLetter(table.name))
             const columns = yield dev_util_1.DevUtil.getColoumn(tabelId);
             const devname = "tester";
             const folderProjectBack = yield database_1.prismaClient.devDirektori.findFirst({
@@ -44,7 +43,7 @@ class DevCreateFile {
             const folderUtilTest = 'test/util/';
             const folderRoute = 'src/coba/'; //'test/'
             const folderSchema = 'src/coba/'; //'test/'
-            if (createFile === 'true') {
+            if (createFile == 'true') {
                 file = folder + folderModel + tableName + '-model.ts\n';
                 util_1.Util.createFile(file, (yield dev_create_model_1.DevCreateModel.createModel(tabelId)).toString());
                 file = folder + folderValidation + tableName + '-validation.ts\n\n';
@@ -59,26 +58,26 @@ class DevCreateFile {
                 util_1.Util.createFile(file, (yield dev_create_util_test_1.DevCreateUtilTest.createUtilTest(tabelId)).toString());
             }
             file = file + "\nCREATE FILE";
-            folder = '\ntouch /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/';
-            file = file + folder + folderModel + tableName + '-model.ts';
-            file = file + folder + folderValidation + tableName + '-validation.ts';
-            file = file + folder + folderService + tableName + '-service.ts';
-            file = file + folder + folderController + tableName + '-controller.ts';
-            file = file + folder + folderTest + tableName + '.test.ts';
-            file = file + folder + folderUtilTest + tableName + '-util-test.ts';
+            let foldercreate = '\ntouch ' + folder; // /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
+            file = file + foldercreate + folderModel + tableName + '-model.ts';
+            file = file + foldercreate + folderValidation + tableName + '-validation.ts';
+            file = file + foldercreate + folderService + tableName + '-service.ts';
+            file = file + foldercreate + folderController + tableName + '-controller.ts';
+            file = file + foldercreate + folderTest + tableName + '.test.ts';
+            file = file + foldercreate + folderUtilTest + tableName + '-util-test.ts';
             // file = file + folder + folderRoute + tableName + '-route.txt'
             // file = file + folder + folderSchema + tableName + '-schema.txt\n'
             file = file + "\nREMOVE FILE";
-            folder = '\nrm /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/';
-            file = file + folder + folderModel + tableName + '-model.ts';
-            file = file + folder + folderValidation + tableName + '-validation.ts';
-            file = file + folder + folderService + tableName + '-service.ts';
-            file = file + folder + folderController + tableName + '-controller.ts';
-            file = file + folder + folderTest + tableName + '.test.ts';
-            file = file + folder + folderUtilTest + tableName + '-util-test.ts';
+            let folderremove = '\nrm ' + folder; // /Users/macbook/Mugi_data/workspace/typescript/belajar-typescript-restful-api/'
+            file = file + folderremove + folderModel + tableName + '-model.ts';
+            file = file + folderremove + folderValidation + tableName + '-validation.ts';
+            file = file + folderremove + folderService + tableName + '-service.ts';
+            file = file + folderremove + folderController + tableName + '-controller.ts';
+            file = file + folderremove + folderTest + tableName + '.test.ts';
+            file = file + folderremove + folderUtilTest + tableName + '-util-test.ts';
             // file = file + folder + folderRoute + tableName + '-route.txt'
             // file = file + folder + folderSchema + tableName + '-schema.txt\n'
-            return file;
+            return file.toString();
         });
     }
     static createFiles(tabelId) {

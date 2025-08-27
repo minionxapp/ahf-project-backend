@@ -13,7 +13,7 @@ export class Dev_projectService {
         const createRequest = Validation.validate(Dev_projectValidation.CREATE, request)
         const record = {
             ...createRequest,//dari object yang ada
-            ...{ create_by: user.name }, //tambahkan username, dengan value dari object user
+            ...{ create_by: user.username }, //tambahkan username, dengan value dari object user
             ...{ create_at: new Date() }
         }  //tambahkan username, dengan value dari object user}
         const dev_project = await prismaClient.dev_project.create({
@@ -47,7 +47,7 @@ export class Dev_projectService {
         const updateRequest = Validation.validate(Dev_projectValidation.UPDATE, request)
         const record = {
             ...updateRequest,//dari object yang ada
-            ...{ update_by: user.name },
+            ...{ update_by: user.username },
             ...{ update_at: new Date() }  //tambahkan username, dengan value dari object user
         }
         //cek Dev_project ada atau tidak
@@ -77,8 +77,14 @@ export class Dev_projectService {
         const searchRequest = Validation.validate(Dev_projectValidation.SEARCH, request);
         const skip = (searchRequest.page - 1) * searchRequest.size;
         const filters = [];
-        // check if name exists
-        // check if name exists
+        // check if name exists create_by
+         if (searchRequest.create_by) {
+            filters.push({
+                create_by: {
+                    contains: searchRequest.create_by
+                }
+            })
+        }
         if (searchRequest.name) {
             filters.push({
                 name: {

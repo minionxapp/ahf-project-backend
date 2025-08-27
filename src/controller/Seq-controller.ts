@@ -18,6 +18,8 @@ export class SeqController {
         }
     }
     static async get(req: UserRequest/*sudah login*/, res: Response, next: NextFunction) {
+        // console.log("==============================================================")
+        // console.log(req.user)
         try {
             const seqId = Number(req.params.seqId)
             const response = await SeqService.get(req.user!, seqId)

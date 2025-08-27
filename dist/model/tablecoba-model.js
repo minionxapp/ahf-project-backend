@@ -1,15 +1,12 @@
 "use strict";
+//Create Model TableCoba-model.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toTablecobaResponse = toTablecobaResponse;
-//toTablecobaResponse
-function toTablecobaResponse(tablecoba) {
+exports.toTableCobaResponse = toTableCobaResponse;
+//toTableCobaResponse
+function toTableCobaResponse(table_coba) {
     return {
-        id: tablecoba.id,
-        first_name: tablecoba.first_name,
-        last_name: tablecoba.last_name,
-        email: tablecoba.email,
-        phone: tablecoba.phone,
-        address: tablecoba.address,
-        username: tablecoba.username,
+        id: table_coba.id,
+        name: table_coba.name,
+        kode: table_coba.kode,
     };
 }

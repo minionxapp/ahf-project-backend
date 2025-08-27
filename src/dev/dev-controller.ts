@@ -27,6 +27,7 @@ export class DevController {
                     route: await DevCreateRoute.createRoute(tabelId),
                     test: await DevCreateTest.createTest(tabelId),
                     utiltest: await DevCreateUtilTest.createUtilTest(tabelId),
+                    
                     file : await DevCreateFile.createScriptFiles(tabelId,req.query.createFile === 'true'    ? 'true' : 'false'),
                 }
 

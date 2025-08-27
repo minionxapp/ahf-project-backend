@@ -58,6 +58,21 @@ class UserController {
             }
         });
     }
+    static getbyusername(req, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                //kirim ke serice
+                const username = (req.params.username);
+                const response = yield user_service_1.UserService.getbyusername(req.user, username); //!-->paksa ada
+                res.status(200).json({
+                    data: response
+                });
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
     static update(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
             try {

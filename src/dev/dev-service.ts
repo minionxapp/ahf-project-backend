@@ -849,7 +849,7 @@ export class DevService {
         // file = file + folder + 'src/coba/' + tableName + '-schema.ts\n'
 
 
-        console.log(file)
+        // console.log(file)
 
         return ''
 

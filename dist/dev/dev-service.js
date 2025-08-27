@@ -771,7 +771,7 @@ class DevService {
             file = file + folder + 'src/coba/' + tableName + '-utilily.txt\n';
             // file = file + folder + 'src/coba/' + tableName + '-route.ts\n'
             // file = file + folder + 'src/coba/' + tableName + '-schema.ts\n'
-            console.log(file);
+            // console.log(file)
             return '';
         });
     }
