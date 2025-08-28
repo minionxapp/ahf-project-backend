@@ -87,5 +87,53 @@ class TableCobaController {
             }
         });
     }
+    //for GET
+    //ID
+    static getId(req /*sudah login*/, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const param = (req.params.tableCobaId);
+                const response = yield TableCoba_service_1.TableCobaService.getId(req.user, param);
+                res.status(200).json({
+                    data: response
+                });
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
+    //Name
+    static getName(req /*sudah login*/, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const param = (req.params.tableCobaName);
+                const response = yield TableCoba_service_1.TableCobaService.getName(req.user, param);
+                res.status(200).json({
+                    data: response
+                });
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
+    //Kode
+    static getKode(req /*sudah login*/, res, next) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // console.log("\nGetkode controller============================\n")
+            try {
+                const param = (req.params.tableCobaKode);
+                const response = yield TableCoba_service_1.TableCobaService.getKode(req.user, param);
+                // console.log(response)
+                res.status(200).json({
+                    data: response
+                });
+            }
+            catch (error) {
+                next(error);
+            }
+        });
+    }
 }
 exports.TableCobaController = TableCobaController;

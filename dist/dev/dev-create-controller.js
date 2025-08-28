@@ -102,8 +102,38 @@ class DevCreateController {
                 '    next(e);\n' +
                 '}\n' +
                 '} \n';
-            controller = controller + '}';
+            controller = controller + '}\n\n';
             // console.log(controller)
+            controller = controller +
+                '//for GET \n' +
+                '    //ID\n' +
+                '    static async getId(req: UserRequest, res: Response, next: NextFunction) {\n' +
+                '        try {\n' +
+                '            const param = (req.params.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + 'Id)\n' +
+                '            const response = await ' + tableName + 'Service.getId(req.user!, param)\n' +
+                '            res.status(200).json({\n' +
+                '                data: response\n' +
+                '            })\n' +
+                '        } catch (error) {\n' +
+                '            next(error)\n' +
+                '        }\n' +
+                '    }\n';
+            for (let index = 0; index < columns.length; index++) {
+                const element = columns[index];
+                controller = controller +
+                    '//' + element.name + '\n' +
+                    '     static async get' + element.name + '(req: UserRequest, res: Response, next: NextFunction) {\n' +
+                    '        try {\n' +
+                    '            const param = (req.params.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + element.name + ')\n' +
+                    '            const response = await ' + tableName + 'Service.get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(req.user!, param)\n' +
+                    '            res.status(200).json({\n' +
+                    '                data: response\n' +
+                    '            })\n' +
+                    '        } catch (error) {\n' +
+                    '            next(error)\n' +
+                    '        }\n' +
+                    '    }\n';
+            }
             return controller;
         });
     }

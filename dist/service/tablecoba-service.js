@@ -139,5 +139,50 @@ class TableCobaService {
             };
         });
     }
+    //GET BY KOLOM //bikin berdasarka kolom yang ada
+    //By ID (buat static--> hanya menghasilkan 1 row)
+    static getId(user, id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tableCoba = yield database_1.prismaClient.tableCoba.findFirst({
+                where: {
+                    id: id,
+                }
+            });
+            if (!tableCoba) {
+                throw new response_error_1.ResponseError(404, "Data not found");
+            }
+            return tableCoba;
+        });
+    }
+    //By kolom name (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)
+    static getName(user, name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tableCoba = yield database_1.prismaClient.tableCoba.findMany({
+                where: {
+                    name: name,
+                    create_by: user.username
+                }
+            });
+            if (!tableCoba) {
+                throw new response_error_1.ResponseError(404, "Data not found");
+            }
+            return tableCoba;
+        });
+    }
+    //By kolom kode (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)
+    static getKode(user, kode) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tableCoba = yield database_1.prismaClient.tableCoba.findMany({
+                where: {
+                    kode: kode,
+                    create_by: user.username
+                }
+            });
+            if (!tableCoba) {
+                throw new response_error_1.ResponseError(404, "Data not found");
+            }
+            return tableCoba;
+        });
+    }
 }
 exports.TableCobaService = TableCobaService;

@@ -131,4 +131,50 @@ export class TableCobaService {
         }
     }
 
+    //GET BY KOLOM //bikin berdasarka kolom yang ada
+    //By ID (buat static--> hanya menghasilkan 1 row)
+    static async getId(user: User, id: string): Promise<TableCobaResponse> {
+        const tableCoba = await prismaClient.tableCoba.findFirst({
+            where: {
+                id: id,
+                create_by: user.username
+            }
+        })
+        if (!tableCoba) {
+            throw new ResponseError(404, "Data not found")
+        }
+        return tableCoba
+    }// console.log(servicex)
+
+    //By kolom name (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)
+    static async getName(user: User, name: string): Promise<Array<TableCobaResponse>> {
+        const tableCoba = await prismaClient.tableCoba.findMany({
+            where: {
+                name: name,
+                create_by: user.username
+            }
+        })
+        if (!tableCoba) {
+            throw new ResponseError(404, "Data not found")
+        }
+        return tableCoba
+    }
+    //By kolom kode (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)
+    static async getKode(user: User, kode: string): Promise<Array<TableCobaResponse>> {
+        const tableCoba = await prismaClient.tableCoba.findMany({
+            where: {
+                kode: kode,
+                create_by: user.username
+            }
+        })
+        if (!tableCoba) {
+            throw new ResponseError(404, "Data not found")
+        }
+        return tableCoba
+    }
+
+
+
+
+
 }

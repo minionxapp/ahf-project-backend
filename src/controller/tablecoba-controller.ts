@@ -65,4 +65,48 @@ export class TableCobaController {
             next(e);
         }
     }
+
+
+    //for GET
+    //ID
+    static async getId(req: UserRequest/*sudah login*/, res: Response, next: NextFunction) {
+        try {
+            const param = (req.params.tableCobaId)
+            const response = await TableCobaService.getId(req.user!, param)
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    
+    //Name
+     static async getName(req: UserRequest/*sudah login*/, res: Response, next: NextFunction) {
+        try {
+            const param = (req.params.tableCobaName)
+            const response = await TableCobaService.getName(req.user!, param)
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    //Kode
+     static async getKode(req: UserRequest/*sudah login*/, res: Response, next: NextFunction) {
+        // console.log("\nGetkode controller============================\n")
+        try {
+            const param = (req.params.tableCobaKode)
+            const response = await TableCobaService.getKode(req.user!, param)
+            // console.log(response)
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
 }

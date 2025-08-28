@@ -19,7 +19,7 @@ export class DevCreateTest {
             'import { prismaClient } from "../src/application/database";\n' +
             'import {' + tableName + 'Test} from "../test/util/' +
             //  (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
-             tableName+'-util-test"'
+            tableName + '-util-test"'
         //create test
         test = test + '//Create test\n' +
             ' describe("POST /api/' + tableNameLow + 's", () => {\n' +
@@ -298,8 +298,46 @@ export class DevCreateTest {
             '  expect(response.body.paging.size).toBe(10)\n'
 
         test = test + '})\n'//end of it
-        test = test + '})\n'//end of describe
-        // console.log(test)
+        test = test + '})\n\n'//end of describe
+
+        //tambahin untuk test get kolom
+        test = test +'//GET by kolom criteria\n'
+            'describe("GetBy Column /api/'+tableNameLow+'s/kolomName/:kolomName", () => {\n' +
+            'beforeEach(async () => {\n' +
+            '  await UserTest.create()\n' +
+            ' await '+tableName+'Test.create()\n' +
+            '})\n\n' +
+            'afterEach(async () => {\n' +
+            '   await '+tableName+'Test.deleteAll() //buatkan di util-test dulu\n' +
+            '   await UserTest.delete()\n' +
+            '})\n\n'
+
+        for (let index = 0; index < columns.length; index++) {
+            const element = columns[index];
+            test = test +
+                '//test cari kolom '+element.name+'\n' +
+                'it("should be able to get by kolom : '+element.name+'", async () => {\n' +
+                'const response = await supertest(web)\n' +
+                '.get("/api/'+tableNameLow+'s/'+element.name+'/test")\n' +
+                '   .set("X-API-TOKEN", "test")\n' +
+                'expect(response.status).toBe(200)\n' +
+                'expect(response.body.data[0].'+element.name+').toBe("test")\n' +
+                '})\n\n' +
+                'it("should not be able to get by kolom : '+element.name+'", async () => {\n' +
+                '   const response = await supertest(web)\n' +
+                '       .get("/api/'+tableNameLow+'s/'+element.name+'/test1")\n' +
+                '       .set("X-API-TOKEN", "test")\n' +
+                '   expect(response.status).toBe(200)\n' +
+                '   expect(response.body.data.length).toBeLessThan(1)\n' +
+                '})\n'
+
+        }
+
+
+
+
+
+        test = test + '})\n'
         return test
 
     }

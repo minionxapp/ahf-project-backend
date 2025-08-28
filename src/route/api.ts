@@ -92,6 +92,10 @@ apiRouter.put("/api/tablecobas/:tableCobaId",TableCobaController.update)
 apiRouter.delete("/api/tablecobas/:tableCobaId", TableCobaController.remove)
 apiRouter.get("/api/tablecobas", TableCobaController.search)
 
+apiRouter.get("/api/tablecobas/id/:tableCobaId", TableCobaController.getId)
+apiRouter.get("/api/tablecobas/name/:tableCobaName", TableCobaController.getName)
+apiRouter.get("/api/tablecobas/kode/:tableCobaKode", TableCobaController.getKode)
+
 
 
 

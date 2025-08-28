@@ -82,6 +82,9 @@ exports.apiRouter.get("/api/tablecobas/:tableCobaId", TableCoba_controller_1.Tab
 exports.apiRouter.put("/api/tablecobas/:tableCobaId", TableCoba_controller_1.TableCobaController.update);
 exports.apiRouter.delete("/api/tablecobas/:tableCobaId", TableCoba_controller_1.TableCobaController.remove);
 exports.apiRouter.get("/api/tablecobas", TableCoba_controller_1.TableCobaController.search);
+exports.apiRouter.get("/api/tablecobas/id/:tableCobaId", TableCoba_controller_1.TableCobaController.getId);
+exports.apiRouter.get("/api/tablecobas/name/:tableCobaName", TableCoba_controller_1.TableCobaController.getName);
+exports.apiRouter.get("/api/tablecobas/kode/:tableCobaKode", TableCoba_controller_1.TableCobaController.getKode);
 // //ROUTE TestAja
 // import {TestAjaController } from "../controller/TestAja-controller";
 // apiRouter.post("/api/testajas",TestAjaController.create)

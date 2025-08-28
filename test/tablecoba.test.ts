@@ -168,3 +168,100 @@ describe("SEARCH /api/tablecobas", () => {
         expect(response.body.paging.size).toBe(10)
     })
 })
+
+describe("GetBy Column /api/tablecobas/kolomName/:kolomName", () => {
+    beforeEach(async () => {
+        await UserTest.create()
+        await TableCobaTest.create()
+    })
+
+    afterEach(async () => {
+        await TableCobaTest.deleteAll() //buatkan di util-test dulu
+        await UserTest.delete()
+    })
+
+    //test cari kolom name
+    it("should be able to get by kolom : name", async () => {
+        const response = await supertest(web)
+            .get("/api/tablecobas/name/test")
+            .set("X-API-TOKEN", "test")
+        expect(response.status).toBe(200)
+        expect(response.body.data[0].name).toBe("test")
+    })
+
+    it("should not be able to get by kolom : name", async () => {
+        const response = await supertest(web)
+            .get("/api/tablecobas/name/test1")
+            .set("X-API-TOKEN", "test")
+        expect(response.status).toBe(200)
+        expect(response.body.data.length).toBeLessThan(1)
+    })
+    //test cari kolom kode
+    it("should be able to get by kolom : kode", async () => {
+        const response = await supertest(web)
+            .get("/api/tablecobas/kode/test")
+            .set("X-API-TOKEN", "test")
+        expect(response.status).toBe(200)
+        expect(response.body.data[0].kode).toBe("test")
+    })
+
+    it("should not be able to get by kolom : kode", async () => {
+        const response = await supertest(web)
+            .get("/api/tablecobas/kode/test1")
+            .set("X-API-TOKEN", "test")
+        expect(response.status).toBe(200)
+        expect(response.body.data.length).toBeLessThan(1)
+    })
+})
+
+
+
+
+
+
+// describe("GetBy Column /api/tablecobas/kolom/:kolom", () => {
+//     beforeEach(async () => {
+//         await UserTest.create()
+//         await TableCobaTest.create()
+//     })
+//     afterEach(async () => {
+//         await TableCobaTest.deleteAll() //buatkan di util-test dulu
+//         await UserTest.delete()
+//     })
+
+
+//     //test cari kolom name
+//     it("should be able to get by kolom : name", async () => {
+//         const response = await supertest(web)
+//             .get("/api/tablecobas/name/test")
+//             .set("X-API-TOKEN", "test")
+//         expect(response.status).toBe(200)
+//         expect(response.body.data[0].name).toBe("test")
+
+//     })
+//     it("should not be able to get by kolom : name", async () => {
+//         const response = await supertest(web)
+//             .get("/api/tablecobas/name/test1")
+//             .set("X-API-TOKEN", "test")
+//         expect(response.status).toBe(200)
+//         expect(response.body.data.length).toBeLessThan(1)
+//     })
+
+//     //test cari kolom kode
+//     it("should be able to get by kolom : kode", async () => {
+//         const response = await supertest(web)
+//             .get("/api/tablecobas/kode/test")
+//             .set("X-API-TOKEN", "test")
+//         expect(response.status).toBe(200)
+//         expect(response.body.data[0].kode).toBe("test")
+//     })
+
+//     it("should not be able to get by kolom : kode", async () => {
+//         const response = await supertest(web)
+//             .get("/api/tablecobas/kode/test1")
+//             .set("X-API-TOKEN", "test")
+//         expect(response.status).toBe(200)
+//         expect(response.body.data.length).toBeLessThan(1)
+//     })
+
+// })

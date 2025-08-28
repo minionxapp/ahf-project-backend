@@ -166,8 +166,40 @@ class DevCreateService {
                 '        total_rows:total\n' +
                 '    }\n' +
                 '}\n}\n';
-            servicex = servicex + '\n}';
-            // console.log(servicex)
+            servicex = servicex + '\n}\n';
+            servicex = servicex +
+                '//GET BY KOLOM //bikin berdasarka kolom yang ada\n' +
+                '    //By ID (buat static--> hanya menghasilkan 1 row)\n' +
+                '    static async getId(user: User, id: string): Promise<' + ((tableName)) + 'Response> {\n' +
+                '        const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.findFirst({\n' +
+                '            where: {\n' +
+                '                id: id,\n' +
+                '                create_by:user.username\n' +
+                '            }\n' +
+                '        })\n' +
+                '        if (!' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
+                '            throw new ResponseError(404, "Data not found")\n' +
+                '        }\n' +
+                '        return ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '\n' +
+                '    }' +
+                '// console.log(servicex)\n\n';
+            for (let index = 0; index < columns.length; index++) {
+                const element = columns[index];
+                servicex = servicex +
+                    '  //By kolom ' + element.name + ' (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)\n' +
+                    ' static async get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' + element.name + ': string): Promise<Array<' + tableName + 'Response>> {\n' +
+                    '     const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.findMany({\n' +
+                    '         where: {\n' +
+                    '             ' + element.name + ': ' + element.name + ',\n' +
+                    '               create_by:user.username\n' +
+                    '         }\n' +
+                    '     })\n' +
+                    '     if (!' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
+                    '         throw new ResponseError(404, "Data not found")\n' +
+                    '     }\n' +
+                    '     return ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '\n' +
+                    ' }\n';
+            }
             return servicex;
         });
     }

@@ -18,6 +18,7 @@ class DevCreateRoute {
             const table = yield dev_util_1.DevUtil.getTable(tabelId);
             const tableName = yield util_1.Util.camelCase(yield util_1.Util.capitalizeFirstLetter(table.name));
             const tableNameLow = (yield util_1.Util.lowerFirstLetter(tableName)).toString();
+            const columns = yield dev_util_1.DevUtil.getColoumn(tabelId);
             const fileName = yield util_1.Util.fileNameFormat(tableName);
             let route = '\n//ROUTE ' + tableName + '\nimport {' + tableName + 'Controller } from "../controller/' +
                 // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
@@ -26,7 +27,14 @@ class DevCreateRoute {
                 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.get)\n' +
                 'apiRouter.put("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.update)\n' +
                 'apiRouter.delete("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id", ' + tableName + 'Controller.remove)\n' +
-                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's", ' + tableName + 'Controller.search)\n';
+                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's", ' + tableName + 'Controller.search)\n' +
+                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/id/:' + tableNameLow.toLowerCase() + 'Id", ' + tableName + 'Controller.getId)\n';
+            for (let index = 0; index < columns.length; index++) {
+                const element = columns[index];
+                route = route + 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/' + element.name + '/:' + tableNameLow.toLowerCase() + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '", ' + tableName + 'Controller.get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + ')\n';
+            }
+            // 'apiRouter.get("/api/tablecobas/name/:tableCobaName", TableCobaController.getName)\n' +
+            //     'apiRouter.get("/api/tablecobas/kode/:tableCobaKode", TableCobaController.getKode)\n'
             // console.log(route)
             return route;
         });

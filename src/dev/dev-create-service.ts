@@ -15,11 +15,11 @@ export class DevCreateService {
             'import { ResponseError } from "../error/response-error";\n' +
             'import { ' + tableName + 'Response, Create' + tableName + 'Request, Search' + tableName + 'Request, to' + tableName + 'Response, Update' + tableName + 'Request } from "../model/' +
             // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
-            tableName+'-model";\n' +
+            tableName + '-model";\n' +
             'import { Pageable } from "../model/page";\n' +
             'import { ' + tableName + 'Validation } from "../validation/' +
             //  (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  +
-             tableName+ '-validation";\n' +
+            tableName + '-validation";\n' +
             'import { Validation } from "../validation/validation";\n' +
             'import { User, ' + tableName + ' } from "@prisma/client";\n' +
             'export class ' + tableName + 'Service {\n' +
@@ -173,8 +173,48 @@ export class DevCreateService {
             '        total_rows:total\n' +
             '    }\n' +
             '}\n}\n'
-        servicex = servicex + '\n}'
-        // console.log(servicex)
+
+        servicex = servicex + '\n}\n'
+
+
+        servicex = servicex +
+            '//GET BY KOLOM //bikin berdasarka kolom yang ada\n' +
+            '    //By ID (buat static--> hanya menghasilkan 1 row)\n' +
+            '    static async getId(user: User, id: string): Promise<' + ((tableName)) + 'Response> {\n' +
+            '        const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.findFirst({\n' +
+            '            where: {\n' +
+            '                id: id,\n' +
+            '                create_by:user.username\n' +
+            '            }\n' +
+            '        })\n' +
+            '        if (!' + (await Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
+            '            throw new ResponseError(404, "Data not found")\n' +
+            '        }\n' +
+            '        return ' + (await Util.lowerFirstLetter(tableName)).toString() + '\n' +
+            '    }' +
+            '// console.log(servicex)\n\n'
+
+        for (let index = 0; index < columns.length; index++) {
+            const element = columns[index];
+
+            servicex = servicex +
+                '  //By kolom ' + element.name + ' (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)\n' +
+                ' static async get' + (await Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' + element.name + ': string): Promise<Array<' + tableName + 'Response>> {\n' +
+                '     const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.findMany({\n' +
+                '         where: {\n' +
+                '             ' + element.name + ': ' + element.name + ',\n' +
+                '               create_by:user.username\n' +
+                '         }\n' +
+                '     })\n' +
+                '     if (!' + (await Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
+                '         throw new ResponseError(404, "Data not found")\n' +
+                '     }\n' +
+                '     return ' + (await Util.lowerFirstLetter(tableName)).toString() + '\n' +
+                ' }\n'
+
+
+        }
+
         return servicex
     }
 }
