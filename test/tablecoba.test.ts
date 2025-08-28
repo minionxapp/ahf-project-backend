@@ -169,6 +169,7 @@ describe("SEARCH /api/tablecobas", () => {
     })
 })
 
+//GET by kolom criteria
 describe("GetBy Column /api/tablecobas/kolomName/:kolomName", () => {
     beforeEach(async () => {
         await UserTest.create()
@@ -178,6 +179,29 @@ describe("GetBy Column /api/tablecobas/kolomName/:kolomName", () => {
     afterEach(async () => {
         await TableCobaTest.deleteAll() //buatkan di util-test dulu
         await UserTest.delete()
+    })
+
+    //test cari kolom name ID
+    it("should be able to get by kolom : ID", async () => {
+        const response = await supertest(web)
+            .get("/api/TableCobas/name/test")
+            .set("X-API-TOKEN", "test")
+        const responseID = await supertest(web)
+            .get("/api/TableCobas/id/" + response.body.data[0].id)
+            .set("X-API-TOKEN", "test")
+        expect(responseID.status).toBe(200)
+        expect(responseID.body.data.name).toBe("test")
+    })
+
+    it("should not be able to get by kolom : ID", async () => {
+        const response = await supertest(web)
+            .get("/api/TableCobas/name/test")
+            .set("X-API-TOKEN", "test")
+        const responseID = await supertest(web)
+            .get("/api/TableCobas/id/" + response.body.data[0].idxx)
+            .set("X-API-TOKEN", "test")
+        expect(responseID.status).toBe(404)
+        expect(responseID.body.errors).toBeDefined()
     })
 
     //test cari kolom name
@@ -215,53 +239,3 @@ describe("GetBy Column /api/tablecobas/kolomName/:kolomName", () => {
 })
 
 
-
-
-
-
-// describe("GetBy Column /api/tablecobas/kolom/:kolom", () => {
-//     beforeEach(async () => {
-//         await UserTest.create()
-//         await TableCobaTest.create()
-//     })
-//     afterEach(async () => {
-//         await TableCobaTest.deleteAll() //buatkan di util-test dulu
-//         await UserTest.delete()
-//     })
-
-
-//     //test cari kolom name
-//     it("should be able to get by kolom : name", async () => {
-//         const response = await supertest(web)
-//             .get("/api/tablecobas/name/test")
-//             .set("X-API-TOKEN", "test")
-//         expect(response.status).toBe(200)
-//         expect(response.body.data[0].name).toBe("test")
-
-//     })
-//     it("should not be able to get by kolom : name", async () => {
-//         const response = await supertest(web)
-//             .get("/api/tablecobas/name/test1")
-//             .set("X-API-TOKEN", "test")
-//         expect(response.status).toBe(200)
-//         expect(response.body.data.length).toBeLessThan(1)
-//     })
-
-//     //test cari kolom kode
-//     it("should be able to get by kolom : kode", async () => {
-//         const response = await supertest(web)
-//             .get("/api/tablecobas/kode/test")
-//             .set("X-API-TOKEN", "test")
-//         expect(response.status).toBe(200)
-//         expect(response.body.data[0].kode).toBe("test")
-//     })
-
-//     it("should not be able to get by kolom : kode", async () => {
-//         const response = await supertest(web)
-//             .get("/api/tablecobas/kode/test1")
-//             .set("X-API-TOKEN", "test")
-//         expect(response.status).toBe(200)
-//         expect(response.body.data.length).toBeLessThan(1)
-//     })
-
-// })

@@ -301,31 +301,54 @@ export class DevCreateTest {
         test = test + '})\n\n'//end of describe
 
         //tambahin untuk test get kolom
-        test = test +'//GET by kolom criteria\n'
-            'describe("GetBy Column /api/'+tableNameLow+'s/kolomName/:kolomName", () => {\n' +
+        test = test + '//GET by kolom criteria\n'+
+        'describe("GetBy Column /api/' + tableNameLow + 's/kolomName/:kolomName", () => {\n' +
             'beforeEach(async () => {\n' +
             '  await UserTest.create()\n' +
-            ' await '+tableName+'Test.create()\n' +
+            ' await ' + tableName + 'Test.create()\n' +
             '})\n\n' +
             'afterEach(async () => {\n' +
-            '   await '+tableName+'Test.deleteAll() //buatkan di util-test dulu\n' +
+            '   await ' + tableName + 'Test.deleteAll() //buatkan di util-test dulu\n' +
             '   await UserTest.delete()\n' +
-            '})\n\n'
+            '})\n\n' +
+
+            ' //test cari kolom name ID\n' +
+            ' it("should be able to get by kolom : ID", async () => {\n' +
+            ' const response = await supertest(web)\n' +
+            ' .get("/api/'+tableName+'s/name/test")\n' +
+            ' .set("X-API-TOKEN", "test")\n' +
+            ' const responseID = await supertest(web)\n' +
+            ' .get("/api/'+tableName+'s/id/"+response.body.data[0].id)\n' +
+            ' .set("X-API-TOKEN", "test")\n' +
+            ' expect(responseID.status).toBe(200)\n' +
+            ' expect(responseID.body.data.name).toBe("test")\n' +
+            ' })\n\n'+
+
+            ' it("should not be able to get by kolom : ID", async () => {\n' +
+            ' const response = await supertest(web)\n' +
+            ' .get("/api/'+tableName+'s/name/test")\n' +
+            ' .set("X-API-TOKEN", "test")\n' +
+            ' const responseID = await supertest(web)\n' +
+            ' .get("/api/'+tableName+'s/id/"+response.body.data[0].id'+'xx'+')\n' +
+            ' .set("X-API-TOKEN", "test")\n' +
+            ' expect(responseID.status).toBe(404)\n' +
+            '  expect(responseID.body.errors).toBeDefined()\n' +
+            ' })\n\n'
 
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             test = test +
-                '//test cari kolom '+element.name+'\n' +
-                'it("should be able to get by kolom : '+element.name+'", async () => {\n' +
+                '//test cari kolom ' + element.name + '\n' +
+                'it("should be able to get by kolom : ' + element.name + '", async () => {\n' +
                 'const response = await supertest(web)\n' +
-                '.get("/api/'+tableNameLow+'s/'+element.name+'/test")\n' +
+                '.get("/api/' + tableNameLow + 's/' + element.name + '/test")\n' +
                 '   .set("X-API-TOKEN", "test")\n' +
                 'expect(response.status).toBe(200)\n' +
-                'expect(response.body.data[0].'+element.name+').toBe("test")\n' +
+                'expect(response.body.data[0].' + element.name + ').toBe("test")\n' +
                 '})\n\n' +
-                'it("should not be able to get by kolom : '+element.name+'", async () => {\n' +
+                'it("should not be able to get by kolom : ' + element.name + '", async () => {\n' +
                 '   const response = await supertest(web)\n' +
-                '       .get("/api/'+tableNameLow+'s/'+element.name+'/test1")\n' +
+                '       .get("/api/' + tableNameLow + 's/' + element.name + '/test1")\n' +
                 '       .set("X-API-TOKEN", "test")\n' +
                 '   expect(response.status).toBe(200)\n' +
                 '   expect(response.body.data.length).toBeLessThan(1)\n' +

@@ -146,6 +146,7 @@ class TableCobaService {
             const tableCoba = yield database_1.prismaClient.tableCoba.findFirst({
                 where: {
                     id: id,
+                    create_by: user.username
                 }
             });
             if (!tableCoba) {
@@ -153,7 +154,7 @@ class TableCobaService {
             }
             return tableCoba;
         });
-    }
+    } // console.log(servicex)
     //By kolom name (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)
     static getName(user, name) {
         return __awaiter(this, void 0, void 0, function* () {
