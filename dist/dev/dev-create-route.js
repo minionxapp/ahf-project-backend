@@ -24,18 +24,23 @@ class DevCreateRoute {
                 // (await Util.capitalizeFirstLetter(table.name)).replace('_',"-")  + 
                 tableName + '-controller";' + '\n' +
                 'apiRouter.post("/api/' + tableNameLow.toLowerCase() + 's",' + tableName + 'Controller.create)\n' +
-                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.get)\n' +
-                'apiRouter.put("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id",' + tableName + 'Controller.update)\n' +
-                'apiRouter.delete("/api/' + tableNameLow.toLowerCase() + 's/:' + tableNameLow + 'Id", ' + tableName + 'Controller.remove)\n' +
+                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/:' /*+ tableNameLow */ + 'Id",' + tableName + 'Controller.get)\n' +
+                'apiRouter.put("/api/' + tableNameLow.toLowerCase() + 's/:' /*+ tableNameLow */ + 'Id",' + tableName + 'Controller.update)\n' +
+                'apiRouter.delete("/api/' + tableNameLow.toLowerCase() + 's/:' /*+ tableNameLow*/ + 'Id", ' + tableName + 'Controller.remove)\n' +
                 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's", ' + tableName + 'Controller.search)\n' +
-                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/id/:' + tableNameLow.toLowerCase() + 'Id", ' + tableName + 'Controller.getId)\n';
+                'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/id/:' + /*tableNameLow.toLowerCase() + */ 'Id", ' + tableName + 'Controller.getId)\n';
             for (let index = 0; index < columns.length; index++) {
                 const element = columns[index];
-                route = route + 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/' + element.name + '/:' + tableNameLow.toLowerCase() + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '", ' + tableName + 'Controller.get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + ')\n';
+                route = route + 'apiRouter.get("/api/' + tableNameLow.toLowerCase() + 's/' + element.name + '/:' + /*tableNameLow.toLowerCase() +*/
+                    (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '", ' + tableName + 'Controller.get' +
+                    (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + ')\n';
             }
-            // 'apiRouter.get("/api/tablecobas/name/:tableCobaName", TableCobaController.getName)\n' +
-            //     'apiRouter.get("/api/tablecobas/kode/:tableCobaKode", TableCobaController.getKode)\n'
-            // console.log(route)
+            /*
+            apiRouter.get("/api/subjobfamilys/id/:subJobFamilyId", SubJobFamilyController.getId)
+            apiRouter.get("/api/subjobfamilys/kode/:subJobFamilyKode", SubJobFamilyController.getKode)
+            apiRouter.get("/api/subjobfamilys/nama/:subJobFamilyNama", SubJobFamilyController.getNama)
+    
+            */
             return route;
         });
     }

@@ -314,22 +314,22 @@ export class DevCreateTest {
 
             ' //test cari kolom name ID\n' +
             ' it("should be able to get by kolom : ID", async () => {\n' +
-            ' const response = await supertest(web)\n' +
-            ' .get("/api/'+tableName+'s/name/test")\n' +
+            ' const response = await supertest(web)\n//sesuaikan NAMA KOLOMNYA \n' +
+            ' .get("/api/'+tableName.toLowerCase()+'s/nama/test")\n' +
             ' .set("X-API-TOKEN", "test")\n' +
             ' const responseID = await supertest(web)\n' +
-            ' .get("/api/'+tableName+'s/id/"+response.body.data[0].id)\n' +
+            ' .get("/api/'+tableName.toLowerCase()+'s/id/"+response.body.data[0].id)\n' +
             ' .set("X-API-TOKEN", "test")\n' +
             ' expect(responseID.status).toBe(200)\n' +
-            ' expect(responseID.body.data.name).toBe("test")\n' +
+            ' expect(responseID.body.data.nama).toBe("test")\n' +
             ' })\n\n'+
 
             ' it("should not be able to get by kolom : ID", async () => {\n' +
             ' const response = await supertest(web)\n' +
-            ' .get("/api/'+tableName+'s/name/test")\n' +
+            ' .get("/api/'+tableName+'s/nama/test")\n' +
             ' .set("X-API-TOKEN", "test")\n' +
             ' const responseID = await supertest(web)\n' +
-            ' .get("/api/'+tableName+'s/id/"+response.body.data[0].id'+'xx'+')\n' +
+            ' .get("/api/'+tableName+'s/id/xx"+response.body.data[0].id'+')\n' +
             ' .set("X-API-TOKEN", "test")\n' +
             ' expect(responseID.status).toBe(404)\n' +
             '  expect(responseID.body.errors).toBeDefined()\n' +

@@ -13,7 +13,11 @@ UserValidation.REGISTER = zod_1.z.object({
     status: zod_1.z.string().max(20).optional(),
     email: zod_1.z.string().max(250).optional(),
     group: zod_1.z.string().max(100).optional(),
-    expired: zod_1.z.coerce.date().optional()
+    expired: zod_1.z.coerce.date().optional(),
+    kode_divisi: zod_1.z.string().max(100).optional(),
+    nama_divisi: zod_1.z.string().max(100).optional(),
+    kode_dept: zod_1.z.string().max(100).optional(),
+    nama_dept: zod_1.z.string().max(100).optional(),
 });
 UserValidation.LOGIN = zod_1.z.object({
     username: zod_1.z.string().min(1).max(100),
@@ -28,6 +32,10 @@ UserValidation.UPDATE = zod_1.z.object({
     email: zod_1.z.string().max(250).optional(),
     group: zod_1.z.string().max(100).optional(),
     expired: zod_1.z.coerce.date().optional(),
+    kode_divisi: zod_1.z.string().max(100).optional().nullable(),
+    nama_divisi: zod_1.z.string().max(100).optional().nullable(),
+    kode_dept: zod_1.z.string().max(100).optional().nullable(),
+    nama_dept: zod_1.z.string().max(100).optional().nullable(),
 });
 //SEARCH validation
 UserValidation.SEARCH = zod_1.z.object({
@@ -38,6 +46,10 @@ UserValidation.SEARCH = zod_1.z.object({
     status: zod_1.z.string().optional(),
     email: zod_1.z.string().optional(),
     group: zod_1.z.string().optional(),
+    kode_divisi: zod_1.z.string().max(100).optional(),
+    nama_divisi: zod_1.z.string().max(100).optional(),
+    kode_dept: zod_1.z.string().max(100).optional(),
+    nama_dept: zod_1.z.string().max(100).optional(),
     page: zod_1.z.number().min(1).positive(),
     size: zod_1.z.number().min(1).max(100).positive()
 });

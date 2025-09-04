@@ -45,19 +45,23 @@ model DevTableColumn {
 }
 
 model User {
-  username  String    @id @db.VarChar(100)
-  password  String    @db.VarChar(100)
-  name      String    @db.VarChar(100)
-  token     String?   @db.VarChar(100)
-  create_by String    @default("admin") @db.VarChar(20)
-  update_by String?   @db.VarChar(20)
-  create_at DateTime?
-  update_at DateTime?
+  username    String    @id @db.VarChar(100)
+  password    String    @db.VarChar(100)
+  name        String    @db.VarChar(100)
+  token       String?   @db.VarChar(100)
+  create_by   String    @default("admin") @db.VarChar(20)
+  update_by   String?   @db.VarChar(20)
+  create_at   DateTime?
+  update_at   DateTime?
   // contacts  Contact[]
-  status    String?   @db.VarChar(20)
-  email     String?   @db.VarChar(250)
-  group     String?   @db.VarChar(100)
-  expired   DateTime?
+  status      String?   @db.VarChar(20)
+  email       String?   @db.VarChar(250)
+  group       String?   @db.VarChar(100)
+  expired     DateTime?
+  kode_divisi String?   @db.VarChar(30)
+  nama_divisi String?   @db.VarChar(100)
+  kode_dept   String?   @db.VarChar(30)
+  nama_dept   String?   @db.VarChar(100)
 
   @@map("users")
 }
@@ -183,6 +187,130 @@ model TableCoba {
   @@map("table_cobas")
 }
 
+//Create Schema Akademi
+model Akademi {
+  id        String    @id @default(uuid())
+  kode      String    @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  aktive    String    @db.VarChar(30)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("akademis")
+}
+
+//Create Schema JobFamily
+model JobFamily {
+  id        String    @id @default(uuid())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  aktive    String    @db.VarChar(30)
+  deskripsi String?   @db.VarChar(250)
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("job_familys")
+}
+
+//Create Schema SubJobFamily
+model SubJobFamily {
+  id        String    @id @default(uuid())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  kode_jf   String    @db.VarChar(100)
+  nama_jf   String    @db.VarChar(100)
+  aktive    String    @db.VarChar(30)
+  urutan    Int
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("sub_job_familys")
+}
+
+//Create Schema UserAkademi
+model UserAkademi {
+  id           String    @id @default(uuid())
+  username     String    @db.VarChar(30)
+  kode_akademi String    @db.VarChar(30)
+  aktive       String    @db.VarChar(30)
+  create_by    String    @db.VarChar(20)
+  update_by    String?   @db.VarChar(20)
+  create_at    DateTime?
+  update_at    DateTime?
+
+  @@map("user_akademis")
+}
+
+//Create Schema Level
+
+model Level {
+  id        String    @id @default(uuid())
+  kode      String    @unique @db.VarChar(20)
+  nama      String    @db.VarChar(30)
+  aktive    String    @db.VarChar(30)
+  urutan    Int
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("levels")
+}
+
+//Create Schema TipeTraining
+model TipeTraining {
+  id        String    @id @default(uuid())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  aktive    String    @db.VarChar(30)
+  urutan    Int
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("tipe_trainings")
+}
+
+//Create Schema Divisi
+model Divisi {
+  id        String    @id @default(uuid())
+  kode      String    @unique @db.VarChar(30)
+  nama      String    @db.VarChar(100)
+  aktive    String    @db.VarChar(30)
+  urutan    Int
+  create_by String    @db.VarChar(20)
+  update_by String?   @db.VarChar(20)
+  create_at DateTime?
+  update_at DateTime?
+
+  @@map("divisis")
+}
+
+//Create Schema DivisiDept
+
+model DivisiDept {
+  id          String    @id @default(uuid())
+  kode        String    @unique @db.VarChar(20)
+  nama        String    @db.VarChar(100)
+  divisi_kode String    @db.VarChar(20)
+  divisi_name String?   @db.VarChar(100)
+  aktive      String    @db.VarChar(20)
+  create_by   String    @db.VarChar(20)
+  update_by   String?   @db.VarChar(20)
+  create_at   DateTime?
+  update_at   DateTime?
+
+  @@map("divisi_depts")
+}
+
+//===================================
 //email      String?   @db.VarChar(100)//? boleh ada null //perbaiki ya***********
 // model Tablecoba {
 //   id         Int     @id @default(autoincrement())

@@ -75,6 +75,7 @@ class UserController {
     }
     static update(req, res, next) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("===========Controller update===================");
             try {
                 const request = req.body;
                 //kirim ke serice
@@ -84,6 +85,7 @@ class UserController {
                 });
             }
             catch (error) {
+                console.log(error);
                 next(error);
             }
         });

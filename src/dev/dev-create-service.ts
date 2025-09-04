@@ -37,15 +37,13 @@ export class DevCreateService {
             }
         }
 
-
-
-
         for (let index = 0; index < columns.length; index++) {
             const element = columns[index];
             if (element.is_uniq == 'Y') {
                 servicex = servicex + 'const total' + element.name + 'Uniq = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.count({\n' +
                     'where: {\n' +
-                    '    ' + element.name + ' : createRequest.' + element.name + '\n' +
+                    '    ' + element.name + ' : createRequest.' + element.name + ',\n' +
+                    '//       create_by: user.username\n' +
                     '}\n' +
                     '})\n' +
                     'if(total' + element.name + 'Uniq !=0){\n' +
@@ -70,7 +68,8 @@ export class DevCreateService {
             'static async check' + tableName + 'Mustexist( ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id: string): Promise<' + tableName + '> {\n' +
             'const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.findFirst({\n' +
             'where: {\n' +
-            'id: ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id,\n' +
+            '   id: ' + (await Util.lowerFirstLetter(tableName)).toString() + 'Id,\n' +
+            '   //create_by: user.username\n' +
             '}\n' +
             '})\n' +
             'if (!' + (await Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
@@ -106,7 +105,7 @@ export class DevCreateService {
             ' const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.update({\n' +
             '    where: {\n' +
             '       id: updateRequest.id,\n' +
-            '  //     username: user.username\n' +
+            '       create_by: user.username\n' +
             '  },\n' +
             '  data: record\n' +
             ' })\n' +
@@ -119,7 +118,7 @@ export class DevCreateService {
             ' const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.delete({\n' +
             ' where: {\n' +
             ' id: id,\n' +
-            ' //username: user.username\n' +
+            ' create_by: user.username\n' +
             ' }\n' +
             ' })\n' +
             ' return ' + (await Util.lowerFirstLetter(tableName)).toString() + '\n' +
@@ -158,7 +157,7 @@ export class DevCreateService {
 
             'const total = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.count({\n' +
             '    where: {\n' +
-            '        //username: user.username,\n' +
+            '        create_by: user.username,\n' +
             '        AND: filters\n' +
             '    },\n' +
             '})\n' +
@@ -172,7 +171,7 @@ export class DevCreateService {
             '        size: searchRequest.size,\n' +
             '        total_rows:total\n' +
             '    }\n' +
-            '}\n}\n'
+            '}\n\n'
 
         servicex = servicex + '\n}\n'
 
@@ -199,7 +198,16 @@ export class DevCreateService {
 
             servicex = servicex +
                 '  //By kolom ' + element.name + ' (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)\n' +
-                ' static async get' + (await Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' + element.name + ': string): Promise<Array<' + tableName + 'Response>> {\n' +
+                ' static async get' + (await Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' +
+                 element.name + ': '
+                  if (element.type =='Number') {
+                    servicex = servicex + 'number'
+                  }else{
+                    servicex = servicex +'string'
+                  }
+                //  'string'+
+                servicex = servicex +
+                 '): Promise<Array<' + tableName + 'Response>> {\n' +
                 '     const ' + (await Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (await Util.lowerFirstLetter(tableName)).toString() + '.findMany({\n' +
                 '         where: {\n' +
                 '             ' + element.name + ': ' + element.name + ',\n' +
@@ -214,7 +222,7 @@ export class DevCreateService {
 
 
         }
-
-        return servicex
+        servicex = servicex+'}\n'
+        return servicex 
     }
 }

@@ -1,0 +1,35 @@
+//CREATE util-test TipeTraining-util.test.ts. 
+
+import { prismaClient } from "../../src/application/database";
+import { TipeTraining } from "@prisma/client";
+export class TipeTrainingTest {
+    static async deleteAll() {
+        await prismaClient.tipeTraining.deleteMany({
+            where: {
+                create_by: "test"
+            }
+        })
+    }
+    static async create() {
+        await prismaClient.tipeTraining.create({
+            data: {
+                kode: "test",
+                nama: "test",
+                aktive: "test",
+                urutan: 1,
+                create_by: "test"
+            }
+        })
+    }
+    static async get(): Promise<TipeTraining> {
+        const tipeTraining = await prismaClient.tipeTraining.findFirst({
+            where: {
+                create_by: "test"
+            }
+        })
+        if (!tipeTraining) {
+            throw new Error("TipeTraining is not found")
+        }
+        return tipeTraining
+    }
+}

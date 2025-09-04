@@ -7,6 +7,10 @@ export type UserResponse = {
     email?: string | null,
     group?: string | null,
     expired?: Date | null,
+    kode_divisi?: string | null,
+    nama_divisi?: string | null,
+    kode_dept?: string | null,
+    nama_dept?: string | null,
 
 }
 
@@ -19,6 +23,10 @@ export type CreateUserRequest = {
     email?: string | null,
     group?: string | null,
     expired?: Date | null,
+    kode_divisi?: string | null,
+    nama_divisi?: string | null,
+    kode_dept?: string | null,
+    nama_dept?: string | null,
 
 
 
@@ -39,6 +47,10 @@ export type UpdateUserRequest = {
     email?: string | null;
     group?: string | null;
     expired?: Date | null;
+    kode_divisi?: string | null,
+    nama_divisi?: string | null,
+    kode_dept?: string | null,
+    nama_dept?: string | null,
 }
 
 //unutk data responsenya 
@@ -56,6 +68,10 @@ export function toUserResponse(user: User): UserResponse {
         email: user.email,
         group: user.group,
         expired: user.expired,
+        kode_divisi: user.kode_divisi,
+        nama_divisi: user.nama_divisi,
+        kode_dept: user.kode_dept,
+        nama_dept: user.nama_dept
     }
 
 }
@@ -73,6 +89,10 @@ export type SearchUserRequest = {
     status?: string | null,
     email?: string | null,
     group?: string | null,
+    kode_divisi?: string | null,
+    nama_divisi?: string | null,
+    kode_dept?: string | null,
+    nama_dept?: string | null,
     page: number,
     size: number,
 }

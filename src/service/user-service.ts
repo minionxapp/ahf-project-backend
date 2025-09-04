@@ -8,6 +8,7 @@ import bcrypt from "bcrypt"
 import { v4 as uuid } from "uuid"
 import { Pageable } from "../model/page";
 import { json } from "express";
+import { console } from "inspector";
 
 export class UserService {
     static async register(request: CreateUserRequest): Promise<UserResponse> {
@@ -80,6 +81,7 @@ export class UserService {
     static async update(user: User, request: UpdateUserRequest): Promise<UserResponse> {
         //validasi
         const updateRequest = Validation.validate(UserValidation.UPDATE, request)
+        console.log(JSON.stringify(updateRequest))
         const record = {
             ...updateRequest,//dari object yang ada
             ...{ update_by: user.name },

@@ -9,7 +9,12 @@ export class UserValidation {
         status: z.string().max(20).optional(),
         email: z.string().max(250).optional(),
         group: z.string().max(100).optional(),
-        expired: z.coerce.date().optional()
+        expired: z.coerce.date().optional(),
+        kode_divisi: z.string().max(100).optional().nullable(),
+        nama_divisi: z.string().max(100).optional().nullable(),
+        kode_dept: z.string().max(100).optional().nullable(),
+        nama_dept: z.string().max(100).optional().nullable(),
+
     })
 
     static readonly LOGIN: ZodType = z.object({
@@ -26,6 +31,10 @@ export class UserValidation {
         email: z.string().max(250).optional(),
         group: z.string().max(100).optional(),
         expired: z.coerce.date().optional(),
+        kode_divisi: z.string().max(100).optional().nullable(),
+        nama_divisi: z.string().max(100).optional().nullable(),
+        kode_dept: z.string().max(100).optional().nullable(),
+        nama_dept: z.string().max(100).optional().nullable(),
     })
     //SEARCH validation
     static readonly SEARCH: ZodType = z.object({
@@ -36,6 +45,10 @@ export class UserValidation {
         status: z.string().optional(),
         email: z.string().optional(),
         group: z.string().optional(),
+        kode_divisi: z.string().max(100).optional(),
+        nama_divisi: z.string().max(100).optional(),
+        kode_dept: z.string().max(100).optional(),
+        nama_dept: z.string().max(100).optional(),
         page: z.number().min(1).positive(),
         size: z.number().min(1).max(100).positive()
     })

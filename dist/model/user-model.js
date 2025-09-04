@@ -16,5 +16,9 @@ function toUserResponse(user) {
         email: user.email,
         group: user.group,
         expired: user.expired,
+        kode_divisi: user.kode_divisi,
+        nama_divisi: user.nama_divisi,
+        kode_dept: user.kode_dept,
+        nama_dept: user.nama_dept
     };
 }

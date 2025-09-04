@@ -16,7 +16,8 @@ export class TableCobaService {
         //Ubah dulu format datenya spt ini ::2025-03-01T00:00:00.000Z
         const totalkodeUniq = await prismaClient.tableCoba.count({
             where: {
-                kode: createRequest.kode
+                kode: createRequest.kode,
+                //       create_by: user.username
             }
         })
         if (totalkodeUniq != 0) {
@@ -40,6 +41,7 @@ export class TableCobaService {
         const tableCoba = await prismaClient.tableCoba.findFirst({
             where: {
                 id: tableCobaId,
+                //create_by: user.username
             }
         })
         if (!tableCoba) {
@@ -67,7 +69,7 @@ export class TableCobaService {
         const tableCoba = await prismaClient.tableCoba.update({
             where: {
                 id: updateRequest.id,
-                //     username: user.username
+                create_by: user.username
             },
             data: record
         })
@@ -79,7 +81,7 @@ export class TableCobaService {
         const tableCoba = await prismaClient.tableCoba.delete({
             where: {
                 id: id,
-                //username: user.username
+                create_by: user.username
             }
         })
         return tableCoba
@@ -116,7 +118,7 @@ export class TableCobaService {
         });
         const total = await prismaClient.tableCoba.count({
             where: {
-                //username: user.username,
+                create_by: user.username,
                 AND: filters
             },
         })
@@ -129,8 +131,9 @@ export class TableCobaService {
                 total_rows: total
             }
         }
-    }
 
+
+    }
     //GET BY KOLOM //bikin berdasarka kolom yang ada
     //By ID (buat static--> hanya menghasilkan 1 row)
     static async getId(user: User, id: string): Promise<TableCobaResponse> {
@@ -172,9 +175,5 @@ export class TableCobaService {
         }
         return tableCoba
     }
-
-
-
-
-
 }
+

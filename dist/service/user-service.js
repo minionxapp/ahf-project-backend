@@ -20,6 +20,7 @@ const user_validation_1 = require("../validation/user-validation");
 const validation_1 = require("../validation/validation");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const uuid_1 = require("uuid");
+const inspector_1 = require("inspector");
 class UserService {
     static register(request) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -85,15 +86,17 @@ class UserService {
     static getbyusername(user, username) {
         return __awaiter(this, void 0, void 0, function* () {
             const userfind = yield this.checkUserMustexist(username);
-            console.log("getuserbyname ............." + username);
-            console.log(userfind);
+            inspector_1.console.log("getuserbyname ............." + username);
+            inspector_1.console.log(userfind);
             return (0, user_model_1.toUserResponse)(userfind);
         });
     }
     static update(user, request) {
         return __awaiter(this, void 0, void 0, function* () {
             //validasi
+            inspector_1.console.log("==============================");
             const updateRequest = validation_1.Validation.validate(user_validation_1.UserValidation.UPDATE, request);
+            inspector_1.console.log(JSON.stringify(updateRequest));
             const record = Object.assign(Object.assign(Object.assign({}, updateRequest), { update_by: user.name }), { update_at: new Date() } //tambahkan username, dengan value dari object user
             );
             const result = yield database_1.prismaClient.user.update({
@@ -208,7 +211,7 @@ class UserService {
     //REMOVE by Id
     static remove(user, username) {
         return __awaiter(this, void 0, void 0, function* () {
-            console;
+            inspector_1.console;
             yield this.checkUserMustexist(username);
             const userdel = yield database_1.prismaClient.user.delete({
                 where: {

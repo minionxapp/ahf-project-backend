@@ -42,11 +42,11 @@ class DevCreateController {
                 '       } catch (error) {\n' +
                 '           next(error)\n' +
                 '       }\n' +
-                '   }\n';
-            //GET
+                '   }\n\n' +
+                '//GET\n';
             controller = controller + ' static async get(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 'try {\n' +
-                '    const ' + tableNameLow + 'Id = (req.params.' + tableNameLow + 'Id)\n' +
+                '    const ' + tableNameLow + 'Id = (req.params.' /*+ tableNameLow */ + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.get(req.user!, ' + tableNameLow + 'Id)\n' +
                 '   res.status(200).json({\n' +
                 '       data: response\n' +
@@ -54,12 +54,12 @@ class DevCreateController {
                 '} catch (error) {\n' +
                 '    next(error)\n' +
                 '}\n' +
-                '}\n';
-            //UPDATE
+                '}\n\n' +
+                '//UPDATE\n';
             controller = controller + 'static async update(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 ' try {\n' +
                 '    const request : Update' + tableName + 'Request = req.body as Update' + tableName + 'Request;\n' +
-                '    request.id = (req.params.' + tableNameLow + 'Id)\n' +
+                '    request.id = (req.params.' /*+ tableNameLow */ + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.update(req.user!, request)\n' +
                 '    res.status(200).json({\n' +
                 '        data: response\n' +
@@ -67,11 +67,11 @@ class DevCreateController {
                 '} catch (error) {\n' +
                 '    next(error)\n' +
                 '}\n' +
-                '}\n';
-            //REMOVE
+                '}\n\n' +
+                '//REMOVE\n';
             controller = controller + ' static async remove(req:UserRequest/*sudah login*/,res:Response, next:NextFunction){\n' +
                 'try {\n' +
-                '    const ' + tableNameLow + 'Id = (req.params.' + tableNameLow + 'Id)\n' +
+                '    const ' + tableNameLow + 'Id = (req.params.' /*+ tableNameLow */ + 'Id)\n' +
                 '    const response = await ' + tableName + 'Service.remove(req.user!, ' + tableNameLow + 'Id)\n' +
                 '    res.status(200).json({\n' +
                 '       data: "OK"\n' +
@@ -100,16 +100,15 @@ class DevCreateController {
                 '  res.status(200).json(response);\n' +
                 '} catch (e) {\n' +
                 '    next(e);\n' +
-                '}\n' +
-                '} \n';
+                '}\n';
             controller = controller + '}\n\n';
             // console.log(controller)
             controller = controller +
-                '//for GET \n' +
-                '    //ID\n' +
+                '//GET By KOLOM NAME \n' +
+                '//ID\n' +
                 '    static async getId(req: UserRequest, res: Response, next: NextFunction) {\n' +
                 '        try {\n' +
-                '            const param = (req.params.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + 'Id)\n' +
+                '            const param = (req.params.' /*+(await Util.lowerFirstLetter(tableName)).toString()*/ + 'Id)\n' +
                 '            const response = await ' + tableName + 'Service.getId(req.user!, param)\n' +
                 '            res.status(200).json({\n' +
                 '                data: response\n' +
@@ -121,10 +120,18 @@ class DevCreateController {
             for (let index = 0; index < columns.length; index++) {
                 const element = columns[index];
                 controller = controller +
-                    '//' + element.name + '\n' +
-                    '     static async get' + element.name + '(req: UserRequest, res: Response, next: NextFunction) {\n' +
+                    '//' + (element.name).toUpperCase() + '\n' +
+                    '     static async get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(req: UserRequest, res: Response, next: NextFunction) {\n' +
                     '        try {\n' +
-                    '            const param = (req.params.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + element.name + ')\n' +
+                    '            const param = ';
+                if (element.type == 'Number') {
+                    controller = controller + 'Number';
+                }
+                else {
+                    controller = controller + 'String';
+                }
+                controller = controller + '(req.params.' + /*(await Util.lowerFirstLetter(tableName)).toString()+*/
+                    (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + ')\n' +
                     '            const response = await ' + tableName + 'Service.get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(req.user!, param)\n' +
                     '            res.status(200).json({\n' +
                     '                data: response\n' +
@@ -134,6 +141,7 @@ class DevCreateController {
                     '        }\n' +
                     '    }\n';
             }
+            controller = controller + '}\n\n';
             return controller;
         });
     }

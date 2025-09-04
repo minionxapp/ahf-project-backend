@@ -49,7 +49,8 @@ class DevCreateService {
                 if (element.is_uniq == 'Y') {
                     servicex = servicex + 'const total' + element.name + 'Uniq = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.count({\n' +
                         'where: {\n' +
-                        '    ' + element.name + ' : createRequest.' + element.name + '\n' +
+                        '    ' + element.name + ' : createRequest.' + element.name + ',\n' +
+                        '//       create_by: user.username\n' +
                         '}\n' +
                         '})\n' +
                         'if(total' + element.name + 'Uniq !=0){\n' +
@@ -72,7 +73,8 @@ class DevCreateService {
                 'static async check' + tableName + 'Mustexist( ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + 'Id: string): Promise<' + tableName + '> {\n' +
                 'const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.findFirst({\n' +
                 'where: {\n' +
-                'id: ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + 'Id,\n' +
+                '   id: ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + 'Id,\n' +
+                '   //create_by: user.username\n' +
                 '}\n' +
                 '})\n' +
                 'if (!' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ') {\n' +
@@ -106,7 +108,7 @@ class DevCreateService {
                 ' const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.update({\n' +
                 '    where: {\n' +
                 '       id: updateRequest.id,\n' +
-                '  //     username: user.username\n' +
+                '       create_by: user.username\n' +
                 '  },\n' +
                 '  data: record\n' +
                 ' })\n' +
@@ -118,7 +120,7 @@ class DevCreateService {
                 ' const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.delete({\n' +
                 ' where: {\n' +
                 ' id: id,\n' +
-                ' //username: user.username\n' +
+                ' create_by: user.username\n' +
                 ' }\n' +
                 ' })\n' +
                 ' return ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '\n' +
@@ -152,7 +154,7 @@ class DevCreateService {
                 '});\n' +
                 'const total = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.count({\n' +
                 '    where: {\n' +
-                '        //username: user.username,\n' +
+                '        create_by: user.username,\n' +
                 '        AND: filters\n' +
                 '    },\n' +
                 '})\n' +
@@ -165,7 +167,7 @@ class DevCreateService {
                 '        size: searchRequest.size,\n' +
                 '        total_rows:total\n' +
                 '    }\n' +
-                '}\n}\n';
+                '}\n\n';
             servicex = servicex + '\n}\n';
             servicex = servicex +
                 '//GET BY KOLOM //bikin berdasarka kolom yang ada\n' +
@@ -187,7 +189,17 @@ class DevCreateService {
                 const element = columns[index];
                 servicex = servicex +
                     '  //By kolom ' + element.name + ' (menyesuaikan kolom yang ada-->hasil bisa saja lebih dari 1 row)\n' +
-                    ' static async get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' + element.name + ': string): Promise<Array<' + tableName + 'Response>> {\n' +
+                    ' static async get' + (yield util_1.Util.capitalizeFirstLetter(element.name)).toString() + '(user: User, ' +
+                    element.name + ': ';
+                if (element.type == 'Number') {
+                    servicex = servicex + 'number';
+                }
+                else {
+                    servicex = servicex + 'string';
+                }
+                //  'string'+
+                servicex = servicex +
+                    '): Promise<Array<' + tableName + 'Response>> {\n' +
                     '     const ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + ' = await prismaClient.' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '.findMany({\n' +
                     '         where: {\n' +
                     '             ' + element.name + ': ' + element.name + ',\n' +
@@ -200,6 +212,7 @@ class DevCreateService {
                     '     return ' + (yield util_1.Util.lowerFirstLetter(tableName)).toString() + '\n' +
                     ' }\n';
             }
+            servicex = servicex + '}\n';
             return servicex;
         });
     }

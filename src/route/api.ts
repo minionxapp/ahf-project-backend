@@ -91,10 +91,135 @@ apiRouter.get("/api/tablecobas/:tableCobaId",TableCobaController.get)
 apiRouter.put("/api/tablecobas/:tableCobaId",TableCobaController.update)
 apiRouter.delete("/api/tablecobas/:tableCobaId", TableCobaController.remove)
 apiRouter.get("/api/tablecobas", TableCobaController.search)
-
 apiRouter.get("/api/tablecobas/id/:tableCobaId", TableCobaController.getId)
 apiRouter.get("/api/tablecobas/name/:tableCobaName", TableCobaController.getName)
 apiRouter.get("/api/tablecobas/kode/:tableCobaKode", TableCobaController.getKode)
+
+//ROUTE Akademi
+import {AkademiController } from "../controller/Akademi-controller";
+apiRouter.post("/api/akademis",AkademiController.create)
+apiRouter.get("/api/akademis/:akademiId",AkademiController.get)
+apiRouter.put("/api/akademis/:akademiId",AkademiController.update)
+apiRouter.delete("/api/akademis/:akademiId", AkademiController.remove)
+apiRouter.get("/api/akademis", AkademiController.search)
+apiRouter.get("/api/akademis/id/:akademiId", AkademiController.getId)
+apiRouter.get("/api/akademis/kode/:akademiKode", AkademiController.getKode)
+apiRouter.get("/api/akademis/nama/:akademiNama", AkademiController.getNama)
+apiRouter.get("/api/akademis/aktive/:akademiAktive", AkademiController.getAktive)
+
+
+//ROUTE JobFamily
+import {JobFamilyController } from "../controller/JobFamily-controller";
+apiRouter.post("/api/jobfamilys",JobFamilyController.create)
+apiRouter.get("/api/jobfamilys/:jobFamilyId",JobFamilyController.get)
+apiRouter.put("/api/jobfamilys/:jobFamilyId",JobFamilyController.update)
+apiRouter.delete("/api/jobfamilys/:jobFamilyId", JobFamilyController.remove)
+apiRouter.get("/api/jobfamilys", JobFamilyController.search)
+//perbaiki untu 2 kata
+apiRouter.get("/api/jobfamilys/id/:jobFamilyId" , JobFamilyController.getId)
+apiRouter.get("/api/jobfamilys/kode/:jobFamilyKode", JobFamilyController.getKode)
+apiRouter.get("/api/jobfamilys/nama/:jobFamilyNama", JobFamilyController.getNama)
+apiRouter.get("/api/jobfamilys/aktive/:jobFamilyAktive", JobFamilyController.getAktive)
+apiRouter.get("/api/jobfamilys/deskripsi/:jobFamilyDeskripsi", JobFamilyController.getDeskripsi)
+
+
+//ROUTE SubJobFamily
+import {SubJobFamilyController } from "../controller/SubJobFamily-controller";
+apiRouter.post("/api/subjobfamilys",SubJobFamilyController.create)
+apiRouter.get("/api/subjobfamilys/:subJobFamilyId",SubJobFamilyController.get)
+apiRouter.put("/api/subjobfamilys/:subJobFamilyId",SubJobFamilyController.update)
+apiRouter.delete("/api/subjobfamilys/:subJobFamilyId", SubJobFamilyController.remove)
+apiRouter.get("/api/subjobfamilys", SubJobFamilyController.search)
+
+//subJobFamilyNama_jf
+apiRouter.get("/api/subjobfamilys/id/:subJobFamilyId", SubJobFamilyController.getId)
+apiRouter.get("/api/subjobfamilys/kode/:subJobFamilyKode", SubJobFamilyController.getKode)
+apiRouter.get("/api/subjobfamilys/nama/:subJobFamilyNama", SubJobFamilyController.getNama)
+apiRouter.get("/api/subjobfamilys/kode_jf/:subJobFamilyKode_jf", SubJobFamilyController.getKode_jf)
+apiRouter.get("/api/subjobfamilys/nama_jf/:subJobFamilyNama_jf", SubJobFamilyController.getNama_jf)
+apiRouter.get("/api/subjobfamilys/aktive/:subJobFamilyAktive", SubJobFamilyController.getAktive)
+apiRouter.get("/api/subjobfamilys/urutan/:subJobFamilyUrutan", SubJobFamilyController.getUrutan)
+
+//ROUTE UserAkademi
+import {UserAkademiController } from "../controller/UserAkademi-controller";
+apiRouter.post("/api/userakademis",UserAkademiController.create)
+apiRouter.get("/api/userakademis/:Id",UserAkademiController.get)
+apiRouter.put("/api/userakademis/:Id",UserAkademiController.update)
+apiRouter.delete("/api/userakademis/:Id", UserAkademiController.remove)
+apiRouter.get("/api/userakademis", UserAkademiController.search)
+apiRouter.get("/api/userakademis/id/:Id", UserAkademiController.getId)
+apiRouter.get("/api/userakademis/username/:Username", UserAkademiController.getUsername)
+apiRouter.get("/api/userakademis/kode_akademi/:Kode_akademi", UserAkademiController.getKode_akademi)
+apiRouter.get("/api/userakademis/aktive/:Aktive", UserAkademiController.getAktive)
+
+//ROUTE Level
+import {LevelController } from "../controller/Level-controller";
+apiRouter.post("/api/levels",LevelController.create)
+apiRouter.get("/api/levels/:Id",LevelController.get)
+apiRouter.put("/api/levels/:Id",LevelController.update)
+apiRouter.delete("/api/levels/:Id", LevelController.remove)
+apiRouter.get("/api/levels", LevelController.search)
+apiRouter.get("/api/levels/id/:Id", LevelController.getId)
+apiRouter.get("/api/levels/kode/:Kode", LevelController.getKode)
+apiRouter.get("/api/levels/nama/:Nama", LevelController.getNama)
+apiRouter.get("/api/levels/aktive/:Aktive", LevelController.getAktive)
+apiRouter.get("/api/levels/urutan/:Urutan", LevelController.getUrutan)
+
+//ROUTE TipeTraining
+import {TipeTrainingController } from "../controller/TipeTraining-controller";
+apiRouter.post("/api/tipetrainings",TipeTrainingController.create)
+apiRouter.get("/api/tipetrainings/:Id",TipeTrainingController.get)
+apiRouter.put("/api/tipetrainings/:Id",TipeTrainingController.update)
+apiRouter.delete("/api/tipetrainings/:Id", TipeTrainingController.remove)
+apiRouter.get("/api/tipetrainings", TipeTrainingController.search)
+apiRouter.get("/api/tipetrainings/id/:Id", TipeTrainingController.getId)
+apiRouter.get("/api/tipetrainings/kode/:Kode", TipeTrainingController.getKode)
+apiRouter.get("/api/tipetrainings/nama/:Nama", TipeTrainingController.getNama)
+apiRouter.get("/api/tipetrainings/aktive/:Aktive", TipeTrainingController.getAktive)
+apiRouter.get("/api/tipetrainings/urutan/:Urutan", TipeTrainingController.getUrutan)
+
+//ROUTE Divisi
+import {DivisiController } from "../controller/Divisi-controller";
+apiRouter.post("/api/divisis",DivisiController.create)
+apiRouter.get("/api/divisis/:Id",DivisiController.get)
+apiRouter.put("/api/divisis/:Id",DivisiController.update)
+apiRouter.delete("/api/divisis/:Id", DivisiController.remove)
+apiRouter.get("/api/divisis", DivisiController.search)
+apiRouter.get("/api/divisis/id/:Id", DivisiController.getId)
+apiRouter.get("/api/divisis/kode/:Kode", DivisiController.getKode)
+apiRouter.get("/api/divisis/nama/:Nama", DivisiController.getNama)
+apiRouter.get("/api/divisis/aktive/:Aktive", DivisiController.getAktive)
+apiRouter.get("/api/divisis/urutan/:Urutan", DivisiController.getUrutan)
+
+//ROUTE DivisiDept
+import {DivisiDeptController } from "../controller/DivisiDept-controller";
+apiRouter.post("/api/divisidepts",DivisiDeptController.create)
+apiRouter.get("/api/divisidepts/:Id",DivisiDeptController.get)
+apiRouter.put("/api/divisidepts/:Id",DivisiDeptController.update)
+apiRouter.delete("/api/divisidepts/:Id", DivisiDeptController.remove)
+apiRouter.get("/api/divisidepts", DivisiDeptController.search)
+apiRouter.get("/api/divisidepts/id/:Id", DivisiDeptController.getId)
+apiRouter.get("/api/divisidepts/kode/:Kode", DivisiDeptController.getKode)
+apiRouter.get("/api/divisidepts/nama/:Nama", DivisiDeptController.getNama)
+apiRouter.get("/api/divisidepts/divisi_kode/:Divisi_kode", DivisiDeptController.getDivisi_kode)
+apiRouter.get("/api/divisidepts/divisi_name/:Divisi_name", DivisiDeptController.getDivisi_name)
+apiRouter.get("/api/divisidepts/aktive/:Aktive", DivisiDeptController.getAktive)
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
